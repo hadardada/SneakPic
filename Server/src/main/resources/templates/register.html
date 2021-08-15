@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head> <meta name="viewport" content="width=device-width, initial-scale=1" user-scalable=no>
+   </head>
+<link rel="stylesheet" type="text/css" href="register.css">
+<form method= "POST" action="/register">
+    <div class="container">
+        <div class="logo">
+        <h3 >Register</h3>
+        <p>Please fill in this form to create an account.</p>
+        </div>
+        <label for="firstName"><b>First Name</b></label>
+        <input type="text" placeholder="Enter First Name" name="firstName" id="firstName" required><br/>
+
+        <label for="lastName"><b>Last Name</b></label>
+        <input type="text" placeholder="Enter Last Name" name="lastName" id="lastName" required><br/>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" id="email" required><br/>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="psw" required><br/>
+
+        <label for="psw-repeat"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" name="matchingPassword" id="psw-repeat" required><br/>
+        <hr>
+
+        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <button type="submit" class="registerbtn">Register</button>
+    </div>
+</form>
+
+    <div class="container signin">
+        <p>Already have an account? <a href="#">Sign in</a>.</p>
+    </div>
+</html>

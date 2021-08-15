@@ -6,9 +6,9 @@ public class UserRegistrationDetails  implements Serializable {
 
     private String firstName;
     private String lastName;
+    private String email;
     private String password;
     private String matchingPassword;
-    private String email;
 
     public String getFirstName() {
         return firstName;
