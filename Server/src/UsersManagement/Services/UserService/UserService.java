@@ -18,15 +18,14 @@ public class UserService {
 
     public User registerNewUserAccount(UserRegistrationDetails userData) {
         if (checkIfUserExist(userData.getEmail())) {
+            //ToDo EmailExistsException
            // throw new EmailExistsException(
-                   // "There is an account with that email adress:" + accountDto.getEmail());
+                   // "There is an account with that email address:" + accountDto.getEmail());
         }
         User user = new User();
         user.setFirstName(userData.getFirstName());
         user.setLastName(userData.getLastName());
-
         user.setPassword(passwordEncoder.encode(userData.getPassword()));
-
         user.setUsername(userData.getEmail());
         return userRepository.save(user);
     }

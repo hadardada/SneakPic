@@ -21,6 +21,7 @@ public class User {
     boolean isAdmin;
     boolean isPhotographer;
     Double rating;
+    //TODO maybe each user (whether they a photografer or not) has a list of: albums, purchases, and so on
 
     ////////////////////////// constructors, getters and setters//////////////////////////////////
     public User() {

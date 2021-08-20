@@ -10,7 +10,7 @@ import Repositories.UserRepository.UserRepository;
 @SpringBootApplication
 @EntityScan (basePackages = "Entities")
 @EnableJpaRepositories (basePackages = "Repositories")
-@ComponentScan(basePackages ={"Controllers", "SecurityConfiguration", "UsersManagement", "Repositories"})
+@ComponentScan(basePackages ={"Controllers", "SecurityConfiguration", "UsersManagement", "Repositories","LocationManagement"})
 public class SneakPicApp {
     public static void main(String[] args) {
         //User aba = new User("k@mail.com","pass", false);
