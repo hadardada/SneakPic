@@ -4,6 +4,7 @@ import Entities.Album.Album;
 import Entities.Locations.AlbumsLocation.AlbumsLocation;
 import Entities.Locations.UsersLocation.UsersLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -11,7 +12,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
-public interface AlbumLocationRepository extends JpaRepository<AlbumsLocation, Long> {
+public interface AlbumLocationRepository extends JpaRepository<AlbumsLocation, Long> , JpaSpecificationExecutor<AlbumsLocation> {
 
     List<AlbumsLocation> findAllByDate(Date publicationDate);
 
@@ -23,5 +24,9 @@ public interface AlbumLocationRepository extends JpaRepository<AlbumsLocation, L
             "            \"              ) * 6371  <= 0.1\"",  nativeQuery = true)
     List<AlbumsLocation> findAllWithin100mRadius(
             @Param("latX") float latX, @Param("longY") float longY );
+
+    List<AlbumsLocation> findAllByTimeBetweenAAndDate(Time TimeStart, Time TimeEnd, Date creationDate);
+
+
 }
 

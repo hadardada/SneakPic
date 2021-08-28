@@ -39,11 +39,13 @@ public class LocationService {
     returns a list of albums
     TODO put notifications here
     TODO put duration as well (now it's just on the very same time)
-
+     */
     public List<Album> findAlbumsOnThisDateAndTime (UsersLocation location, int duration){
         Time until = new Time(location.getTime().getTime() + duration);
 
+
     }
+    /*
 
     //This method is activated when an album is uploaded
     public List<Album> findUsersOnThisDateAndTime{

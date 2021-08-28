@@ -1,6 +1,6 @@
 
-const checkInButton = document.querySelector('#checkInButton');
-locationButton.addEventListener("click", sendPosition())
+const checkInButton = document.querySelector('#send-location');
+checkInButton.addEventListener("click", sendPosition())
 async function sendPosition(){
     var pos = getLocation();
     const response = await fetch('/check-in', {
@@ -12,7 +12,6 @@ async function sendPosition(){
     });
 }
 function getLocation() {
-    var x = document.getElementById("demo");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -33,6 +32,7 @@ function getLocation() {
             }
         );return pos;
     } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
+        window.alert("Geolocation is not supported by this browser. Please allow location service");
+        //TODO check is it works on mobile correctly
     }
 }
