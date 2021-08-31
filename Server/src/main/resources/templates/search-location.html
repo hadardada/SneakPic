@@ -18,7 +18,7 @@
     <a href="home.html"> <i class="fas fa-user"></i></a>
     <a href="notifications.html" class="notification"><i class="fas fa-bell"></i><span class="badge">3</span></a>
 </div>
-<div class="msg1">Please choose location on map, and then set time range</div>
+<div class="msg1" style="font-size: 20px">Please choose location on map, and then set time range</div>
 <div id="map"></div>
 <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgQppaGx-QFHdBvhmV4YD1wPEs_EygwJc&callback=initMap&libraries=&v=weekly"
@@ -26,10 +26,11 @@
 ></script>
 <div class="options">
     <div class="timeRange">
-        <input type="datetime-local" id="from"
-               name="meeting-time"  onchange="fromTimeHandler(event)">
-        <input type="datetime-local" id="to"
-               name="meeting-time" onchange="toTimeHandler(event)" >
+        <label>From:</label>
+        <input type="datetime-local" id="from" onchange="fromTimeHandler(event)">
+        <br>
+        <label>To:</label>
+        <input type="datetime-local" id="to" onchange="toTimeHandler(event)" >
 
     </div>
     <br>

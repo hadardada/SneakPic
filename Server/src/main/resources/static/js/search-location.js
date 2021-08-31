@@ -14,8 +14,8 @@ function initMap() {
         pos = {
             lat: e.latLng.lat(),
             lng: e.latLng.lng(),
-            from: 0,
-            to:  0, // same time for both from and to since it's a check-in
+            fromTime: 0,
+            toTime:  0, // same time for both from and to since it's a check-in
             manually: true, // meaning it's a check in on actual time and not retroactively
         }
     });
@@ -30,11 +30,11 @@ function placeMarkerAndPanTo(latLng, map) {
 }
 
 function fromTimeHandler(event){
-    pos.from = event.target.value;
+    pos.fromTime = event.target.value;
 }
 
 function toTimeHandler(event){
-    pos.to = event.target.value;
+    pos.toTime = event.target.value;
 }
 
 sendLocation.addEventListener("click", function sendPosition(){

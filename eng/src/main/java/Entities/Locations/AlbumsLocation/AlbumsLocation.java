@@ -11,8 +11,8 @@ public class AlbumsLocation {
     private long albumId;
     private float latitude;
     private float longitude;
-    private Date date;
-    private Time time;
+    private Timestamp fromTime;
+    private Timestamp toTime;
 
     public long getAlbumId() {
         return albumId;
@@ -38,20 +38,20 @@ public class AlbumsLocation {
         this.longitude = longitude;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getFromTime() {
+        return fromTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setFromTime(Timestamp fromTime) {
+        this.fromTime = fromTime;
     }
 
-    public Time getTime() {
-        return time;
+    public Timestamp getToTime() {
+        return toTime;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setToTime(Timestamp toTime) {
+        this.toTime = toTime;
     }
 }
 

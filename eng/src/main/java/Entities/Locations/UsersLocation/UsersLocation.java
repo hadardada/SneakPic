@@ -15,8 +15,8 @@ public class UsersLocation {
     private long id;
     private float latitude;
     private float longitude;
-    private Timestamp from;
-    private Timestamp to;
+    private Timestamp fromTime;
+    private Timestamp toTime;
     private String userName;
 
     public UsersLocation(){}
@@ -24,8 +24,8 @@ public class UsersLocation {
     public UsersLocation(float latitude, float longitude, Timestamp from , Timestamp to, String userName) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.from = from;
-        this.to = to;
+        this.fromTime = from;
+        this.toTime = to;
         this.userName = userName;
     }
 
@@ -61,5 +61,21 @@ public class UsersLocation {
 
     public long getId() {
         return id;
+    }
+
+    public Timestamp getFrom() {
+        return fromTime;
+    }
+
+    public void setFrom(Timestamp from) {
+        this.fromTime = from;
+    }
+
+    public Timestamp getTo() {
+        return toTime;
+    }
+
+    public void setTo(Timestamp to) {
+        this.toTime = to;
     }
 }

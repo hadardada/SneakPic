@@ -23,12 +23,12 @@ public class CheckIn {
     LocationService locationService;
 
     @RequestMapping( value = "/user/check-in")
-    public String getCheckinPage (Position position) {
+    public String getCheckinPage () {
         return "check-in";
     }
 
     @RequestMapping( value = "/user/search-location")
-    public String getSerchLocationPage (Position position) {
+    public String getSerchLocationPage () {
         return "search-location";
     }
 
@@ -40,7 +40,6 @@ public class CheckIn {
         user.orElseThrow(()-> new UsernameNotFoundException("No Such User: "+ username));
 
         //get location + time
-        UsersLocation usersLocation = locationService.getUsersLocationObject(position, user.get());
-
+        locationService.uploadUserLocation(position, user.get());
     }
 }

@@ -9,6 +9,7 @@ import Repositories.UsersLocationRepository.UsersLocationRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -18,7 +19,7 @@ import java.util.List;
 import static com.querydsl.core.types.dsl.MathExpressions.acos;
 import static com.querydsl.core.types.dsl.MathExpressions.sin;
 import static com.querydsl.core.types.dsl.MathExpressions.cos;
-
+@Service
 public class RadiusSearch {
     private QAlbumsLocation albumsLocation = QAlbumsLocation.albumsLocation;
     private QUsersLocation usersLocation = QUsersLocation.usersLocation;
@@ -34,10 +35,14 @@ public class RadiusSearch {
      returns a list of AlbumsLocations.
      The Radius search is based on spherical law of cosines, and using the querydsl tool.
      */
-    public List<AlbumsLocation> findAllAlbumsByDateTimeAnd150mRadius(Time TimeStart, Time TimeEnd, Date date, float lat, float lon){
-        BooleanExpression isDateMatches = albumsLocation.date.eq(date).and(albumsLocation.time.eq(TimeStart)); //TODO address the time range
+    public List<AlbumsLocation> findAllAlbumsByDateTimeAnd150mRadius(UsersLocation usersLocation){
+        Timestamp timeStart = usersLocation.getFrom();
+        Timestamp timeEnd = usersLocation.getTo();
+        float lat =usersLocation.getLatitude();
+        float lon= usersLocation.getLongitude();
+        BooleanExpression isDateMatches = albumsLocation.fromTime.loe(timeEnd).and(albumsLocation.toTime.goe(timeStart));
         BooleanExpression isLocation100m = acos((sin(albumsLocation.latitude.multiply(0.0175)).multiply(Math.sin(lat * 0.0175)))
-                        .add(cos(albumsLocation.latitude.multiply(0.0172)).multiply(Math.cos(lat*0.0175))
+                        .add(cos(albumsLocation.latitude.multiply(0.0175)).multiply(Math.cos(lat*0.0175))
                                 .multiply(cos(albumsLocation.longitude.multiply(0.0175).multiply(-1).add((lon*0.0175)))))).multiply(6371)
                 .lt(0.15);
         return (List<AlbumsLocation>) albumLocationRepository.findAll(isDateMatches.and(isLocation100m));
@@ -52,9 +57,9 @@ public class RadiusSearch {
      The Radius search is based on spherical law of cosines, and using the querydsl tool.
      */
     public List<UsersLocation> findAllUsersByDateTimeAnd150mRadius(Timestamp timeStart, Timestamp timeEnd, float lat, float lon){
-        BooleanExpression doesAlbumTimeMatch = usersLocation.from.loe(timeEnd).and(usersLocation.to.goe(timeStart));
+        BooleanExpression doesAlbumTimeMatch = usersLocation.fromTime.loe(timeEnd).and(usersLocation.toTime.goe(timeStart));
         BooleanExpression isAlbumLocation100m = acos((sin(usersLocation.latitude.multiply(0.0175)).multiply(Math.sin(lat * 0.0175)))
-                .add(cos(usersLocation.latitude.multiply(0.0172)).multiply(Math.cos(lat*0.0175))
+                .add(cos(usersLocation.latitude.multiply(0.0175)).multiply(Math.cos(lat*0.0175))
                         .multiply(cos(usersLocation.longitude.multiply(0.0175).multiply(-1).add((lon*0.0175)))))).multiply(6371)
                 .lt(0.15);
 

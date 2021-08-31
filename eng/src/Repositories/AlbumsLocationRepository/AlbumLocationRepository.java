@@ -15,9 +15,6 @@ import java.util.List;
 
 public interface AlbumLocationRepository extends JpaRepository<AlbumsLocation, Long> ,QuerydslPredicateExecutor{
 
-    List<AlbumsLocation> findAllByDate(Date publicationDate);
-
-    List<AlbumsLocation> findAllByTimeBetween(Time TimeStart, Time TimeEnd);
 
 }
 

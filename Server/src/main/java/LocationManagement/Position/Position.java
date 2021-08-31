@@ -1,12 +1,13 @@
 package LocationManagement.Position;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Position implements Serializable {
     private float lat;
     private float lng;
-    private long fromTime;
-    private long toTime;
+    private Timestamp fromTime;
+    private Timestamp toTime;
     private boolean manually; //false: check in on actual time. true: retroactively
 
     public Position(){}
@@ -27,19 +28,21 @@ public class Position implements Serializable {
         this.lng = lng;
     }
 
-    public long getFromTime() {
+    public Timestamp getFromTime() {
         return fromTime;
     }
 
-    public void setFromTime(long fromTime) {
-        this.fromTime = fromTime;
+    public void setFromTime(Timestamp from) {
+        this.fromTime = from;
     }
 
-    public long getToTime() {
+    public Timestamp getToTime() {
         return toTime;
     }
 
-    public void setToTime(long toTime) {
-        this.toTime = toTime;
+    public void setToTime(Timestamp to) {
+        this.toTime = to;
     }
+
+    public boolean getManually(){return this.manually;}
 }
