@@ -16,8 +16,15 @@ public class Home {
         return ("<h>welcome user</h>");
     }
 
+    @GetMapping ("/user/hi")
+    public String userHi(){
+        return ("<h>hi user</h>");
+    }
+
     @GetMapping ("/admin")
     public String admin(){
         return ("<h>welcome admin</h>");
     }
+
+
 }

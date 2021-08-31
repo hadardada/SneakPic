@@ -2,6 +2,11 @@ body{
     background-color:#DCEDEF;
 }
 
+#map{
+    width:100%;
+    height:300px;
+}
+
 .msg1{
     font-family:Segoe UI, "Segoe UI";
     font-weight: bold;
@@ -24,6 +29,7 @@ body{
     font-size: 25px;
 
 }
+
 
 .options button{
     position: static;

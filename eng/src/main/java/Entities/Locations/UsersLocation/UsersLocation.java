@@ -7,25 +7,25 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+
 @Entity
 public class UsersLocation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private float latitude;
     private float longitude;
-    private Date date;
-    private Time time;
-   // private Timestamp time; it might be better to use the timestamp instead
+    private Timestamp from;
+    private Timestamp to;
     private String userName;
 
     public UsersLocation(){}
 
-    public UsersLocation(float latitude, float longitude, Date date, Time time, String userName) {
+    public UsersLocation(float latitude, float longitude, Timestamp from , Timestamp to, String userName) {
         this.latitude = latitude;
         this.longitude = longitude;
-        this.date = date;
-        this.time = time;
+        this.from = from;
+        this.to = to;
         this.userName = userName;
     }
 
@@ -53,28 +53,12 @@ public class UsersLocation {
         this.userName = userName;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
 
     public void setId(long id) {
         this.id = id;
     }
 
-    @Id
+
     public long getId() {
         return id;
     }
