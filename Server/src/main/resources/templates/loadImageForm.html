@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<form id="idForm" method="post" action="/user/load-image"
+      enctype="multipart/form-data"
+>
+    ...
+    <div>
+
+        <label>Photos: </label>
+        <input type="file" name="image" accept="image/png, image/jpeg" />
+            <input type="submit" value="Submit">
+
+
+    </div>
+    ...
+</form>
+
+<form id="DoneForm" method="get" action="/user/load-album"
+
+>
+    ...
+    <div>
+
+        <label>Done --> </label>
+        <button type="button" name="finish"  />
+        <input type="submit" value="Done">
+
+
+    </div>
+    ...
+</form>
+<body>
+<!--<script>-->
+<!--    function getURL() {-->
+<!--        alert("The URL of this page is: " + window.location.href);-->
+<!--    }-->
+<!--</script>-->
+</body>
+</html>
