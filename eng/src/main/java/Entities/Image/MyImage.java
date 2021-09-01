@@ -15,6 +15,17 @@ public class MyImage {
     String pathOriginal;
     String pathMarked;
 
+
+
+    Long albumId;
+
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
+    }
     public Long getId() {
         return id;
     }

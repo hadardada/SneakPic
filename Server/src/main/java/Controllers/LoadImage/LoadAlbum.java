@@ -1,17 +1,15 @@
 package Controllers.LoadImage;
 
-import Entities.Image.MyImage;
 import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.UserRepository.UserRepository;
 import UsersManagement.LoadImageServiece.AlbumDetails;
 import UsersManagement.LoadImageServiece.LoadAlbumService;
-import UsersManagement.LoadImageServiece.LoadImageServiece;
+import UsersManagement.LoadImageServiece.LoadImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 
@@ -62,7 +60,7 @@ public class LoadAlbum {
 //        String path1 = path.replaceAll("%3A", ":");
 //        String path2 = path1.replaceAll("%5C", "/");
 //        this.imageDetails.setPath(path2.split("=")[1]);
-        LoadImageServiece.getInstance().saveImage(multipartFile, this.currentAlbumId,
+        LoadImageService.getInstance().saveImage(multipartFile, this.currentAlbumId,
                 this.userRepository, this.albumRepository, this.myImageRepository);
         return "loadImageForm";
 
