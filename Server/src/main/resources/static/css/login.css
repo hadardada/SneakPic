@@ -1,0 +1,49 @@
+body{
+    background-image: url("/img/logo.PNG");
+    background-repeat: no-repeat;
+    background-color: #104250;
+    background-position: bottom;
+
+}
+.loginForm{
+    position:relative;
+    top:300px;
+}
+
+.msgFromServer{
+
+}
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 16px 27px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 25px;
+    background-color: #cccccc;
+
+}
+
+.loginBtn:hover{
+    background-color: #364E55;
+}
+.loginBtn {
+    width: 100%;
+    position: static;
+    font-family:Segoe UI, "Segoe UI";
+    font-weight: bold;
+    background-color: #07242D;
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    display: inline-block;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.msgFromServer{
+    display: none;
+
+}

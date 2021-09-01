@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Entity
 public class Album {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // so the ID is generated automatically
+    @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
     private String name;
     private Timestamp uploadedDate;

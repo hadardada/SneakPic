@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     http.authorizeRequests()
             .antMatchers("/admin/**").hasAuthority("ADMIN")
             .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-            .and().formLogin()
+            .and().formLogin().loginPage("/login").permitAll()
             .and().csrf().disable(); //TODO thats the only way i got to post requests, find out if thats ok to lea
     }
 /*    @Override
