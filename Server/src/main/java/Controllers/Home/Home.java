@@ -21,6 +21,9 @@ public class Home {
         return ("<h>hi user</h>");
     }
 
+//    @GetMapping ("/load-image")
+//    public String loadImage(){ return "register"; }
+
     @GetMapping ("/admin")
     public String admin(){
         return ("<h>welcome admin</h>");

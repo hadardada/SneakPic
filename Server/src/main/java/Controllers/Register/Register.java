@@ -8,16 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+
 @Controller
 public class Register {
 
-    @Autowired // TODO for some reason (looked for hours) this annotation does not work here
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/register")
     public String showRegistrationForm(WebRequest request, Model model) {
-        UserRegistrationDetails userData = new UserRegistrationDetails();
-        model.addAttribute("user", userData);
+       // UserRegistrationDetails userData = new UserRegistrationDetails();
+       // model.addAttribute("user", userData);
         return "register";
     }
 
