@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Service
@@ -23,22 +24,25 @@ public class NotificationsService {
         Iterable<Notification> notificationsItr = notificationsRepository.findAllByUsernameOrderByWasReadAsc(username);
         StringBuilder builder = new StringBuilder();
         notificationsItr.forEach((element) -> {
-            builder.append(this.getNotificationMsgByType(element.getTypeNoti(), element.getSourceId(), element.isWasRead()));
+            builder.append(this.getNotificationMsgByType(element.getTypeNoti(), element.getSourceId(), element.isWasRead()
+                    ,element.getCreatedOn().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd-MM-yyy"))));
             element.setWasRead(true); // set all notifications to be read
         });
         String notificationElements = builder.toString();
         return notificationElements;
     }
 
-    public String getNotificationMsgByType(short type, Long sourceId, boolean wasRead) {
+    public String getNotificationMsgByType(short type, Long sourceId, boolean wasRead, String creation) {
         String classRead;
         if (wasRead)//was not read yet
             classRead = "new";
         else
             classRead = "old";
-        String albumLink = "<a class =\""+classRead+"\" href=\\\"/user/view-album/" + sourceId + "\\\">An Album was taken in your recent location!</a>";
-        String purchaseLink = "<a class =\""+classRead+"\" href=\\\"/user/view-purchase/" + sourceId + "\\\">A user purchased one of the photos you took!</a>";
-        String test = "<a href=\\\"/user/test/" + sourceId + "\\\">Test!</a>";
+        String albumLink = "<a class =\""+classRead+"\" href=\"/user/view-album/" + sourceId + "\">An Album was taken in your recent location!" +
+                "<label class=\"createdOn\"> "+creation+"</label></a>";
+        String purchaseLink = "<a class =\""+classRead+"\" href=\"/user/view-purchase/" + sourceId + "\">A user purchased one of the photos you took!" +
+                "<label class=\"createdOn\"> "+creation+"</label></a>";
+        String test = "<a href=\"/user/test/" + sourceId + "\">Test!</a>";
         if (type == 0) {
             return test;
         } else if (type == 1) {
@@ -59,7 +63,8 @@ public class NotificationsService {
         Date date = new Date();
         Timestamp now = new Timestamp(date.getTime());
         short type = 2;
-        radiusSearch.findAllUsersByDateTimeAnd150mRadius(albumLocation).forEach((element) -> {
+        Iterable<UsersLocation> usersLocations = radiusSearch.findAllUsersByDateTimeAnd150mRadius(albumLocation);
+        usersLocations.forEach((element) -> {
                     notificationsRepository.save(new Notification(element.getUserName(), type,
                             albumLocation.getAlbumId(), now));
                 }
@@ -76,7 +81,8 @@ public class NotificationsService {
             Date date = new Date();
             Timestamp now = new Timestamp(date.getTime());
             short type = 2;
-            radiusSearch.findAllAlbumsByDateTimeAnd150mRadius(userLocation).forEach((element)-> {
+            Iterable<AlbumsLocation> albumsLocations = radiusSearch.findAllAlbumsByDateTimeAnd150mRadius(userLocation);
+            albumsLocations.forEach((element)-> {
                 notificationsRepository.save(new Notification(userLocation.getUserName(), type,
                         element.getAlbumId(), now));
             });

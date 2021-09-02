@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class NotificationsController {
     @Autowired
     UserRepository userRepository;
@@ -31,9 +32,9 @@ public class NotificationsController {
                 "<div class=\"icon-bar\">\n" +
                 "    <a href=\"home.html\"> <i class=\"fas fa-home\"></i></a>\n" +
                 "    <a href=\"search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
-                "    <a class = \"active\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
+                "    <a class = \"check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
                 "    <a href=\"home.html\"> <i class=\"fas fa-user\"></i></a>\n" +
-                "    <a href=\"notifications.html\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\">3</span></a>\n" +
+                "    <a class = \"active\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
                 "</div><br>"+
                 "<div class = \"notis\">\n"+
                 notificationsService.getNotificationsForUser(username)+"\n </div></body></html>";

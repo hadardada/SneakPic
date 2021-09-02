@@ -5,12 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class Notification {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
+   // @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
+
     private String username; // to whom this notification sent to
     private short typeNoti;
     private Long sourceId; // id of the object (album / purchase) who triggered this notification
@@ -20,6 +22,7 @@ public class Notification {
     public Notification(){}
 
     public Notification(String username, short type, Long sourceId, Timestamp createdOn) {
+        this.id = new Date().getTime();
         this.username = username;
         this.typeNoti = type;
         this.sourceId = sourceId;

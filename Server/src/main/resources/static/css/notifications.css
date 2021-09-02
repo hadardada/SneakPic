@@ -1,0 +1,30 @@
+.notis{
+    width: 100%;
+}
+
+.notis a{
+    display: block;
+    font-family:Segoe UI, "Segoe UI";
+    font-weight: bold;
+    font-size: 20px;
+    border-color: #104250;
+    color: #104250;
+    text-decoration: none;
+    padding: 4%;
+    border:solid
+}
+
+ .createdOn{
+    color: gray;
+}
+.new {
+    background-color: #CDEAF2;
+}
+
+.old{
+    background-color: white;
+
+}
+.icon-bar a:hover {
+    background-color: dimgrey;
+}
