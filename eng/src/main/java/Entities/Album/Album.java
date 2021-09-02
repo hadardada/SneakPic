@@ -21,6 +21,16 @@ public class Album {
     private Timestamp uploadedDate;
     private String photographer;
 
+    public String getAlbumPath() {
+        return albumPath;
+    }
+
+    public void setAlbumPath(String albumPath) {
+        this.albumPath = albumPath;
+    }
+
+    private String albumPath;
+
     public String getName() {
         return name;
     }

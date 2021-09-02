@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Album images --- ></title>
+<!--    \Albums\28\marked\Liran_photoCopy.jpeg-->
+</head>
+<tbody>
+<forEach items="${images}" var="image">
+    <form method= "POST" action="/user/add-purchase" >
+        <img height="120" width="120" src="${image.pathMarked}">
+        <button type="button" name="purchase"  />
+        <input type="submit" value="Purchase" >
+
+    </form>
+</forEach>
+
+</tbody>
+</html>
