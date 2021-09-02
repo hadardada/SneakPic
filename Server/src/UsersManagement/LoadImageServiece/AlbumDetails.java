@@ -8,10 +8,13 @@ import java.sql.Timestamp;
 public class AlbumDetails implements Serializable {
     //private Long id;
     private String name;
-    //private Position position;
-    //private Timestamp uploadedDate;
-    //private String photographer;
+    //album position details
+    private float lat;
+    private float lng;
+    private Timestamp fromTime;
+    private Timestamp toTime;
 
+    public AlbumDetails(){}
 
     public AlbumDetails(String name) {
         this.name = name;
@@ -25,11 +28,35 @@ public class AlbumDetails implements Serializable {
         this.name = name;
     }
 
-//    public Position getPosition() {
-//        return position;
-//    }
-//
-//    public void setPosition(Position position) {
-//        this.position = position;
-//    }
+    public float getLat() {
+        return lat;
+    }
+
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
+
+    public void setLng(float lng) {
+        this.lng = lng;
+    }
+
+    public Timestamp getFromTime() {
+        return fromTime;
+    }
+
+    public void setFromTime(Timestamp fromTime) {
+        this.fromTime = fromTime;
+    }
+
+    public Timestamp getToTime() {
+        return toTime;
+    }
+
+    public void setToTime(Timestamp toTime) {
+        this.toTime = toTime;
+    }
 }

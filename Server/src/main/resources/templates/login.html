@@ -2,13 +2,16 @@
 <html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"   type="text/css" href="/css/login.css">
+<script src="https://kit.fontawesome.com/9a7aeebf11.js" crossorigin="anonymous"></script>
+
 <meta charset="UTF-8">
 <head>
     <title>Login</title>
 </head>
 <body>
 <form class="loginForm" method= "POST" action="/login">
-    <div class="msgFromServer"></div>
+    <div class="msgFromServer" id = "msgFromServer"><i class="fas fa-exclamation-triangle"></i>
+    </div>
     <div class="credentials">
         <input type="text" placeholder="Username" name="username" id="username" required><br/>
         <input type="password" placeholder="Password" name="password" id="password" required><br/>

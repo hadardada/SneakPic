@@ -12,8 +12,7 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
-
-    private Long ImageId;
+    private Long imageId;
     private Long buyerId;
     private Timestamp purchaseDate;
 
@@ -26,11 +25,11 @@ public class Purchase {
     }
 
     public Long getImageId() {
-        return ImageId;
+        return imageId;
     }
 
     public void setImageId(Long imageId) {
-        ImageId = imageId;
+        imageId = imageId;
     }
 
     public Long getBuyerId() {

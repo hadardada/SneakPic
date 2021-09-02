@@ -41,11 +41,9 @@ public class LoadAlbum {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/user/load-album")
-    public String addNewAlbum(AlbumDetails albumDetails) throws IOException {
+    public String addNewAlbum(@RequestBody AlbumDetails albumDetails) throws IOException {
         this.currentAlbumId = loadAlbumService.addNewAlbum(albumDetails, userRepository, albumRepository);
         return "redirect:/user/load-image";
-        //return new ModelAndView("redirect:/user/load-Image/albumId="+ currentAlbumId);
-        //showImageForm();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/user/load-image")

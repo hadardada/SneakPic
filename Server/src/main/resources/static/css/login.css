@@ -11,6 +11,14 @@ body{
 }
 
 .msgFromServer{
+    display: none;
+    color: red;
+    width: 100%;
+    border: 1px solid #ccc;
+    background-color: #cccccc;
+    font-family:Segoe UI, "Segoe UI";
+    font-size: 20px;
+
 
 }
 input[type=text], input[type=password] {

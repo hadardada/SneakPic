@@ -8,13 +8,22 @@ import java.sql.Timestamp;
 @Entity
 public class AlbumsLocation {
     @Id
-    private long albumId;
+    private Long albumId;
     private float latitude;
     private float longitude;
     private Timestamp fromTime;
     private Timestamp toTime;
 
-    public long getAlbumId() {
+    public  AlbumsLocation(){}
+
+    public AlbumsLocation(Long albumId, float latitude, float longitude, Timestamp from , Timestamp to) {
+        this.albumId = albumId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.fromTime = from;
+        this.toTime = to;
+    }
+    public Long getAlbumId() {
         return albumId;
     }
 

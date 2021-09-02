@@ -35,7 +35,7 @@ public class RadiusSearch {
      returns a list of AlbumsLocations.
      The Radius search is based on spherical law of cosines, and using the querydsl tool.
      */
-    public List<AlbumsLocation> findAllAlbumsByDateTimeAnd150mRadius(UsersLocation usersLocation){
+    public Iterable<AlbumsLocation> findAllAlbumsByDateTimeAnd150mRadius(UsersLocation usersLocation){
         Timestamp timeStart = usersLocation.getFrom();
         Timestamp timeEnd = usersLocation.getTo();
         float lat =usersLocation.getLatitude();
@@ -45,7 +45,7 @@ public class RadiusSearch {
                         .add(cos(albumsLocation.latitude.multiply(0.0175)).multiply(Math.cos(lat*0.0175))
                                 .multiply(cos(albumsLocation.longitude.multiply(0.0175).multiply(-1).add((lon*0.0175)))))).multiply(6371)
                 .lt(0.15);
-        return (List<AlbumsLocation>) albumLocationRepository.findAll(isDateMatches.and(isLocation100m));
+        return albumLocationRepository.findAll(isDateMatches.and(isLocation100m));
     }
 
 
@@ -56,14 +56,18 @@ public class RadiusSearch {
      returns a list of UsersLocations.
      The Radius search is based on spherical law of cosines, and using the querydsl tool.
      */
-    public List<UsersLocation> findAllUsersByDateTimeAnd150mRadius(Timestamp timeStart, Timestamp timeEnd, float lat, float lon){
+    public Iterable<UsersLocation> findAllUsersByDateTimeAnd150mRadius(AlbumsLocation albumsLocation){
+        Timestamp timeStart = albumsLocation.getFromTime();
+        Timestamp timeEnd = albumsLocation.getToTime();
+        float lat =albumsLocation.getLatitude();
+        float lon= albumsLocation.getLongitude();
         BooleanExpression doesAlbumTimeMatch = usersLocation.fromTime.loe(timeEnd).and(usersLocation.toTime.goe(timeStart));
         BooleanExpression isAlbumLocation100m = acos((sin(usersLocation.latitude.multiply(0.0175)).multiply(Math.sin(lat * 0.0175)))
                 .add(cos(usersLocation.latitude.multiply(0.0175)).multiply(Math.cos(lat*0.0175))
                         .multiply(cos(usersLocation.longitude.multiply(0.0175).multiply(-1).add((lon*0.0175)))))).multiply(6371)
                 .lt(0.15);
 
-        return (List<UsersLocation>) usersLocationRepository.findAll(doesAlbumTimeMatch.and(isAlbumLocation100m));
+        return  usersLocationRepository.findAll(doesAlbumTimeMatch.and(isAlbumLocation100m));
 
     }
 

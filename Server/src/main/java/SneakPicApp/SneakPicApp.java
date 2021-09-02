@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EntityScan (basePackages = "Entities")
 @EnableJpaRepositories (basePackages = "Repositories")
-@ComponentScan(basePackages ={"Controllers", "SecurityConfiguration", "UsersManagement", "Repositories","LocationManagement"})
+@ComponentScan(basePackages ={"Controllers", "SecurityConfiguration", "UsersManagement", "Repositories","LocationManagement", "NotificationsManagement"})
 public class SneakPicApp {
     public static void main(String[] args) {
         //User aba = new User("k@mail.com","pass", false);

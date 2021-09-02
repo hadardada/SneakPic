@@ -11,8 +11,8 @@ body{
     font-family:Segoe UI, "Segoe UI";
     font-weight: bold;
     position: static;
-    text-align: center;
-    font-size: 30px;
+    text-align: left;
+    font-size: 20px;
     color: #08434e;
     background-color: white;
     border-radius: 5%;
@@ -30,8 +30,11 @@ body{
 
 }
 
-
-.options button{
+input[type=text] {
+    width: 55%;
+    padding: 10px;
+}
+.options button, .button {
     position: static;
     font-family:Segoe UI, "Segoe UI";
     font-weight: bold;
