@@ -5,19 +5,20 @@ import Entities.Image.MyImage;
 import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.UserRepository.UserRepository;
+import UsersManagement.LoadImageServiece.AlbumDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Jsp;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 public class PurchaseController {
 
     //@Autowired
@@ -30,8 +31,8 @@ public class PurchaseController {
     MyImageRepository myImageRepository;
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user/add-purchase")
-    public String showRelevantAlbums(Model model){
+    @RequestMapping( value = "/user/add-purchase")
+    public String showRelevantAlbums(){
         //lets say for now, that all relevant albums are even. thaen we collect by position
 
         //ModelAndView listOfAlbums = new ModelAndView("Albums");
@@ -45,8 +46,43 @@ public class PurchaseController {
         List<String> imagesMarkedPath = new ArrayList<>();
         imagesOfAlbum.forEach(i -> imagesMarkedPath.add(i.getPathMarked().substring(70)));
 
-        model.addAttribute("images",imagesMarkedPath);
+       // model.addAttribute("images",imagesMarkedPath);
 
-        return "ImagesToView";
+        return "<html>\n" +
+                "<head>\n" +
+                "<meta charset=\"UTF-8\">\n" +
+                "<title>Title</title>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                generateImageTags(imagesMarkedPath) +
+                "</body>\n" +
+                "</html>";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/user/add-purchase/{path}")
+    public void addNewAlbum(@RequestBody AlbumDetails albumDetails, @PathVariable String path) throws IOException {
+       // this.currentAlbumId = loadAlbumService.addNewAlbum(albumDetails, userRepository, albumRepository);
+        System.out.println("here");
+    }
+
+
+    private String generateImageTags(List<String> paths){
+        StringBuilder sb = new StringBuilder();
+        for (String path: paths) {
+            //sb.append("<form id=\"singlePurchase\" method=\"post\" action=\"/user/add-purchase"+ path +">\n");
+//            sb.append("<li>\n");
+//            sb.append("<form method=\"post\" action=\"/user/add-purchase"+ path +">\n");
+
+            sb.append("<img height=300 width=300 src=\""+path+"\">\n");
+//            sb.append("<button type=\"button\" name=\"purchase\">\n" +
+//                    "<input type=\"submit\" value=\"Purchase\">\n");
+
+//            sb.append("</form>\n");
+//            sb.append("</li>\n");
+           // sb.append("</form>\n");
+
+        }
+
+        return sb.toString();
     }
 }
