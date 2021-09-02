@@ -4,7 +4,7 @@ import Entities.Image.MyImage;
 import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.UserRepository.UserRepository;
-import com.sun.deploy.nativesandbox.NativeSandboxBroker;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -13,7 +13,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,15 +21,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class LoadImageServiece {
+@Service
+public class LoadImageService {
 
-    private static LoadImageServiece INSTANCE = null;
+    private static LoadImageService INSTANCE = null;
 
     private FileUploadUtil fileUploadUtil = new FileUploadUtil();
-    public static LoadImageServiece getInstance()
+    public static LoadImageService getInstance()
     {
         if (INSTANCE == null)
-            INSTANCE = new LoadImageServiece();
+            INSTANCE = new LoadImageService();
 
         return INSTANCE;
     }
@@ -98,6 +98,7 @@ public class LoadImageServiece {
             MyImage myImage = new MyImage();
             myImage.setPathOriginal(path);
             myImage.setPathMarked(outPath);
+            myImage.setAlbumId(albumId);
 
             myImageRepository.save(myImage);
 
