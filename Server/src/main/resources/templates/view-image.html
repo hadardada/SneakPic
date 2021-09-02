@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet"  type="text/css" href="/css/icon-bar.css">
+<link rel="stylesheet"   type="text/css" href="/css/img-bar.css">
+<script src="https://kit.fontawesome.com/9a7aeebf11.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
+    <title>search location</title>
+</head>
+<body onload="injectLinks()">
+<div class="icon-bar">
+    <a href="/user/home"> <i class="fas fa-home"></i></a>
+    <a class = active><i class="fas fa-search-location"></i></a>
+    <a  href = "/user/check-in"><i class="fas fa-map-marker-alt"></i></a>
+    <a href="/user/profile"> <i class="fas fa-user"></i></a>
+    <a href="/user/notifications" class="notification"><i class="fas fa-bell"></i><span class="badge" id="badge"></span></a>
+</div>
+<div class ="img-view">
+    <img id="currImg">
+</div>
+
+<div class="img-bar">
+    <a id="leftBtn"> <i class="fas fa-chevron-left"></i></a>
+    <a id="cartBtn"> <i class="fas fa-cart-arrow-down"></i></a>
+    <a id = "albumBtn"> <i class="far fa-images"></i></a>
+    <a id = "rightBtn"> <i class="fas fa-chevron-right"></i></a>
+
+</div>
+</body>
+<script src="/js/view-img.js"></script>
+<script src="/js/notifications.js"></script>
+
+</html>

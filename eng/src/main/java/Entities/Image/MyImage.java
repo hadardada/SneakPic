@@ -11,12 +11,8 @@ public class MyImage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
-
-    String pathOriginal;
-    String pathMarked;
-
-
-
+   // String pathOriginal;
+  //  String pathMarked;
     Long albumId;
 
     public Long getAlbumId() {
@@ -34,7 +30,7 @@ public class MyImage {
         this.id = id;
     }
 
-    public String getPathOriginal() {
+   /* public String getPathOriginal() {
         return pathOriginal;
     }
 
@@ -49,7 +45,7 @@ public class MyImage {
     public void setPathMarked(String pathMarked) {
         this.pathMarked = pathMarked;
     }
-
-
+    //TODO delete the comments
+*/
 
 }

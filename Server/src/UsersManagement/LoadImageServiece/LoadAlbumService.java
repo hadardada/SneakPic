@@ -26,20 +26,14 @@ public class LoadAlbumService {
     private NotificationsService notificationsService;
     @Autowired
     private AlbumLocationRepository albumLocationRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
 
+    private static String absolutePath = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\";
 
-    private static LoadAlbumService INSTANCE = null;
-
-    public static LoadAlbumService getInstance()
-    {
-        if (INSTANCE == null)
-            INSTANCE = new LoadAlbumService();
-
-        return INSTANCE;
-    }
-
-
-    public Long addNewAlbum(AlbumDetails albumDetails, UserRepository userRepository, AlbumRepository albumRepos) {
+    public Long addNewAlbum(AlbumDetails albumDetails) {
         Album album = new Album();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<User> user= userRepository.findByUsername(username);
@@ -50,8 +44,8 @@ public class LoadAlbumService {
         album.setUploadedDate(new Timestamp(date.getTime()));
         album.setName(albumDetails.getName());
 
-        albumRepos.save(album);
-        Optional<Album> currentAlbum = albumRepos.findById(album.getId());
+        albumRepository.save(album);
+        Optional<Album> currentAlbum = albumRepository.findById(album.getId());
 
         //define user as a photographer now that an album had been uploaded by him
         user.get().setIsPhotographer(true); //TODO check if it actually being saved on DB
@@ -63,15 +57,12 @@ public class LoadAlbumService {
         notificationsService.searchForUsersLocationsAndNotify(albumLocation);
 
 
-        File f = new File("C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\" + currentAlbum.get().getId());
+        File f = new File(this.absolutePath + currentAlbum.get().getId());
         f.mkdirs();
-        File fMarked = new File("C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\"+currentAlbum.get().getId()+"\\" + "marked");
+
+        //create "marked" folder for photos with watermarks
+        File fMarked = new File(absolutePath+currentAlbum.get().getId()+"\\" + "marked");
         fMarked.mkdir();
         return album.getId();
-        //System.out.println("");
-
-
-
-
     }
 }

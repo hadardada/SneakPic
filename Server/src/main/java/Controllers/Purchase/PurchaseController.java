@@ -31,29 +31,40 @@ public class PurchaseController {
     MyImageRepository myImageRepository;
 
 
-    @RequestMapping( value = "/user/add-purchase")
-    public String showRelevantAlbums(){
+    @RequestMapping( value = "/user/add-purchase/{albumId}")
+    public String showRelevantAlbums(@PathVariable String albumId){
         //lets say for now, that all relevant albums are even. thaen we collect by position
 
         //ModelAndView listOfAlbums = new ModelAndView("Albums");
 //        List<Album> albums = albumRepository.findAll().stream().filter(s->s.getId()%2 ==0).collect(Collectors.toList());
 //        model.addAttribute(albums);
         //listOfAlbums.addObject(albums);
-        Long id = Long.getLong("28");
+        Long id = Long.getLong("albumId");
         //Album album28 = albumRepository.getById(id);
+        //C:\Users\dhnhd\Desktop\SneakPic\SneakPic\Server\src\main\resources\static\Albums
         List<MyImage> imagesOfAlbum = myImageRepository.findAll().stream().filter(i->i.getAlbumId() == id).collect(Collectors.toList());
 
         List<String> imagesMarkedPath = new ArrayList<>();
-        imagesOfAlbum.forEach(i -> imagesMarkedPath.add(i.getPathMarked().substring(70)));
+        imagesOfAlbum.forEach(i -> imagesMarkedPath.add(i.getPathMarked().substring(73)));
 
        // model.addAttribute("images",imagesMarkedPath);
 
         return "<html>\n" +
+                "<link rel=\"stylesheet\"  type=\"text/css\" href=\"/css/icon-bar.css\">\n" +
+                "<link rel=\"stylesheet\"   type=\"text/css\" href=\"/css/notifications.css\">"+
+                "<script src=\"https://kit.fontawesome.com/9a7aeebf11.js\" crossorigin=\"anonymous\"></script>\n" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+                "<meta charset=\"UTF-8\">"+
                 "<head>\n" +
-                "<meta charset=\"UTF-8\">\n" +
-                "<title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> </head>\n" +
+                "<body>" +
+                "<div class=\"icon-bar\">\n" +
+                "    <a href=\"/user/home\"> <i class=\"fas fa-home\"></i></a>\n" +
+                "    <a href=\"/user/search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
+                "    <a href= \"/user/check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
+                "    <a href=\"home.html\"> <i class=\"fas fa-user\"></i></a>\n" +
+                "    <a class = \"active\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
+                "</div><br>"+
                 generateImageTags(imagesMarkedPath) +
                 "</body>\n" +
                 "</html>";

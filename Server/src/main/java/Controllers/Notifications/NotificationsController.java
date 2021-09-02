@@ -19,7 +19,6 @@ public class NotificationsController {
     public String getNotifications(){
         //get user
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
         return "<html>\n" +
                 "<link rel=\"stylesheet\"  type=\"text/css\" href=\"/css/icon-bar.css\">\n" +
                 "<link rel=\"stylesheet\"   type=\"text/css\" href=\"/css/notifications.css\">"+
@@ -40,4 +39,9 @@ public class NotificationsController {
                 notificationsService.getNotificationsForUser(username)+"\n </div></body></html>";
     }
 
+    @RequestMapping( value = "/user/number-of-notifications")
+    public String getNumberOfNotifications() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return String.valueOf(notificationsService.getNumberOfUnwatchedNotificationsForUser(username));
+    }
 }

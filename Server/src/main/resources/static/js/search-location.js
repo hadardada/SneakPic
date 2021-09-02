@@ -58,7 +58,8 @@ function sendPosition(){
         });
     }
 
-function addPositionToAlbum(event){
+async function addPositionToAlbum(event){
+    var albumId;
     const nameEl = document.querySelector('#name');
     albumDetails = {
         name : nameEl.value,
@@ -67,8 +68,8 @@ function addPositionToAlbum(event){
         fromTime: pos.fromTime,
         toTime: pos.toTime,
     }
-
-    const response =  fetch('/user/load-album', {
+    event.preventDefault();
+    const response = await fetch('/user/load-album', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
@@ -76,9 +77,10 @@ function addPositionToAlbum(event){
         body: JSON.stringify(albumDetails),
         redirect: "follow",
     });
-    event.preventDefault();
-    window.location.href = "/user/load-image";
+        window.location.href = "/user/load-image";
 }
+
+
 
 
 

@@ -4,6 +4,7 @@ import Entities.Image.MyImage;
 import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.UserRepository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,32 +21,41 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Optional;
 
 @Service
 public class LoadImageService {
 
-    private static LoadImageService INSTANCE = null;
+    @Autowired
+    private AlbumRepository albumRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private MyImageRepository myImageRepository;
 
-    private FileUploadUtil fileUploadUtil = new FileUploadUtil();
-    public static LoadImageService getInstance()
-    {
-        if (INSTANCE == null)
-            INSTANCE = new LoadImageService();
+    private static String absolutePath = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\";
 
-        return INSTANCE;
-    }
-
-    public void saveImage(MultipartFile image, Long albumId, UserRepository userRepository,
-                          AlbumRepository albumRepository, MyImageRepository myImageRepository) throws IOException {
+    public void saveImage(MultipartFile image, Long albumId) throws IOException {
         System.out.println("here");
         try {
-            String fileName = image.getOriginalFilename();
-            String uploadDir = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\" + albumId;
-            FileUploadUtil.saveFile(uploadDir, fileName, image);
-            String path = uploadDir+ "/" +fileName; //original image path
+            if (image.isEmpty()) // if no img was sent
+                return; // do nothing
 
+            //save to data base
+            MyImage myImage = new MyImage();
+            myImage.setAlbumId(albumId);
+            MyImage currImg= myImageRepository.save(myImage);
+
+            //save uploaded img
+            String fileName = currImg.getId().toString()+"."+image.getContentType().replaceFirst("image/", "");
+            String uploadDir = this.absolutePath + albumId;
+            FileUploadUtil.saveFile(uploadDir, fileName, image);
+
+            //get "marked" dir
+            String path = uploadDir+ "/" +fileName; //original image path
             String[] details = path.split("/");
             String outDir = path.replace(details[details.length -1], "marked");
+
             File sourceImageFile = new File(path);
             BufferedImage sourceImage = ImageIO.read(sourceImageFile);
             String sourceName = details[details.length -1].split("\\.")[0];
@@ -55,7 +65,7 @@ public class LoadImageService {
             File outImageFile = new File(outPath);
 
             Graphics2D g2d = (Graphics2D) copy.getGraphics();
-            String waterMark = "SneakPeak";
+            String waterMark = "SneakPic";
             // initializes necessary graphic properties
             AlphaComposite alphaChannel = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f);
             g2d.setComposite(alphaChannel);
@@ -94,15 +104,6 @@ public class LoadImageService {
             g2d.dispose();
 
             System.out.println("The tex watermark is added to the image.");
-            //save to data base
-            MyImage myImage = new MyImage();
-            myImage.setPathOriginal(path);
-            myImage.setPathMarked(outPath);
-            myImage.setAlbumId(albumId);
-
-            myImageRepository.save(myImage);
-
-
         } catch (IOException ex) {
             System.err.println(ex);
         } finally {

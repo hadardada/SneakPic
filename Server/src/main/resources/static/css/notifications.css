@@ -29,15 +29,12 @@
 
  }
 .new {
-    background-color: #CDEAF2;
+    background-color: #99f5c5;
 }
 
 .old{
     background-color: white;
 
-}
-.icon-bar a:hover {
-    background-color: dimgrey;
 }
 
 body{

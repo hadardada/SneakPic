@@ -1,13 +1,11 @@
 package Entities.Notification;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
+@Table(name="Notifications")
 public class Notification {
     @Id
    // @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
@@ -17,6 +15,7 @@ public class Notification {
     private short typeNoti;
     private Long sourceId; // id of the object (album / purchase) who triggered this notification
     boolean wasRead;
+    boolean wasWatched;
     Timestamp createdOn;
 
     public Notification(){}
@@ -26,7 +25,8 @@ public class Notification {
         this.username = username;
         this.typeNoti = type;
         this.sourceId = sourceId;
-        this.wasRead = false; // new notifications have never been read
+        this.wasRead = false; // new notifications have never been read before, therefore this field is set to false at start
+        this.wasWatched = false; // same as above
         this.createdOn = createdOn;
     }
 
@@ -78,5 +78,13 @@ public class Notification {
     @Id
     public Long getIdNoti() {
         return id;
+    }
+
+    public boolean isWasWatched() {
+        return wasWatched;
+    }
+
+    public void setWasWatched(boolean wasWatched) {
+        this.wasWatched = wasWatched;
     }
 }

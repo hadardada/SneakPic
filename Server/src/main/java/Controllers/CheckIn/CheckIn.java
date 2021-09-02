@@ -28,7 +28,7 @@ public class CheckIn {
     }
 
     @RequestMapping( value = "/user/search-location")
-    public String getSerchLocationPage () {
+    public String getSearchLocationPage () {
         return "search-location";
     }
 
@@ -41,5 +41,6 @@ public class CheckIn {
 
         //get location + time
         locationService.uploadUserLocation(position, user.get());
+        return;
     }
 }

@@ -2,8 +2,8 @@
 const checkInButton = document.querySelector('#send-location');
 var map, infoWindow;
 var pos;
-//document.addEventListener("DOMContentLoaded", initMap);
-
+const pageContent = document.getElementById('page-content');
+const msgSent = document.getElementById('demo');
 function initMap(){
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -31,14 +31,19 @@ function initMap(){
     //TODO check is it works on mobile correctly
 }
 
-checkInButton.addEventListener("click", function sendPosition(){
-    const response =  fetch('/user/check-in', {
+checkInButton.addEventListener("click", async function sendPosition(){
+    const response =  await fetch('/user/check-in', {
         method: 'post',
         headers: new Headers({
             'Content-Type': 'application/json;charset=utf-8'
         }),
         body: JSON.stringify(pos)
     });
+
+    if (response.ok){
+        pageContent.style.display="none";
+        msgSent.innerText = "Your location has been received.";
+    }
 }
 );
 

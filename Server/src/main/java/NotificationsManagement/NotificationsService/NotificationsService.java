@@ -26,7 +26,11 @@ public class NotificationsService {
         notificationsItr.forEach((element) -> {
             builder.append(this.getNotificationMsgByType(element.getTypeNoti(), element.getSourceId(), element.isWasRead()
                     ,element.getCreatedOn().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyy"))));
-            element.setWasRead(true); // set all notifications to be read
+            if (!element.isWasWatched())
+                element.setWasWatched(true);
+            notificationsRepository.save(element);
+            // set all notifications 'watched' field to be true - since this method is being called
+            // only after user chooses to view notifications
         });
         String notificationElements = builder.toString();
         if (notificationElements.equals("")) // empty sting = no notifications
@@ -36,11 +40,11 @@ public class NotificationsService {
 
     public String getNotificationMsgByType(short type, Long sourceId, boolean wasRead, String creation) {
         String classRead;
-        if (wasRead)//was not read yet
-            classRead = "new";
-        else
+        if (wasRead)
             classRead = "old";
-        String albumLink = "<a class =\""+classRead+"\" href=\"/user/view-album/" + sourceId + "\">An Album was taken in your recent location!" +
+        else
+            classRead = "new";
+        String albumLink = "<a class =\""+classRead+"\" href=\"/user/view-album/" + sourceId + "\">An album was taken in your recent location!" +
                 "<label class=\"createdOn\"> "+creation+"</label></a>";
         String purchaseLink = "<a class =\""+classRead+"\" href=\"/user/view-purchase/" + sourceId + "\">A user purchased one of the photos you took!" +
                 "<label class=\"createdOn\"> "+creation+"</label></a>";
@@ -74,22 +78,34 @@ public class NotificationsService {
     }
 
 
-    /* This method receives UserLocation Object and finds all the albums that matches by location and time
+    /** This method receives UserLocation Object and finds all the albums that matches by location and time
     (it calls to one of the "radius Search" methods)
     and then for each matching album creates a new notification from type "2" which is album notification type
     This method should be called after a user locations is being uploaded (manually, not via "check-in")
      */
         public void searchForAlbumsAndNotify (UsersLocation userLocation){
             Date date = new Date();
+            String userName = userLocation.getUserName();
             Timestamp now = new Timestamp(date.getTime());
             short type = 2;
             Iterable<AlbumsLocation> albumsLocations = radiusSearch.findAllAlbumsByDateTimeAnd150mRadius(userLocation);
             albumsLocations.forEach((element)-> {
-                notificationsRepository.save(new Notification(userLocation.getUserName(), type,
-                        element.getAlbumId(), now));
+                if(!notificationsRepository.findFirstByUsernameAndSourceId(userName, element.getAlbumId()).isPresent())
+                    {notificationsRepository.save(new Notification(userName, type,
+                        element.getAlbumId(), now));}
             });
 
         }
 
+        public void setNotificationToRead(String username, Long albumId){
+            Notification currNoti = notificationsRepository.getFirstByUsernameAndSourceId(username,albumId);
+            currNoti.setWasRead(true);
+            notificationsRepository.save(currNoti);
+        }
+
+
+        public long getNumberOfUnwatchedNotificationsForUser(String username){
+            return notificationsRepository.countByUsernameAndWasWatched(username, false);
+        }
     }
 

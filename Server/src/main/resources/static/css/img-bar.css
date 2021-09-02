@@ -1,40 +1,33 @@
-.icon-bar {
+.img-bar {
     width: 100%; /* Full-width */
     background-color: #08434e; /* Dark-blue background */
     overflow: auto; /* Overflow due to float */
+    position: fixed;
+    bottom: 0;
 }
 
-.icon-bar a {
+.img-bar a {
     float: left; /* Float links side by side */
     text-align: center; /* Center-align text */
-    width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+    width: 25%; /* Equal width (4 icons with 20% width each = 100%) */
     padding: 12px 0; /* Some top and bottom padding */
     transition: all 0.3s ease; /* Add transition for hover effects */
     color: white; /* White text color */
     font-size: 40px; /* Increased font size */
 }
 
-.icon-bar a:hover {
+.img-bar a:hover {
     background-color: #578B94; /* Add a hover color */
 }
 
-.icon-bar .active {
-    background-color: #578B94; /* Add an active/current color */
-}
-
-.notification:hover {
-    background: red;
-}
-
-.notification .badge {
+.img-view img{
+    width: 100%;
     position: absolute;
-    top: 12px;
-    right:15px;
-    padding: 1px 10px;
-    border-radius: 50%;
-    background: red;
-    color:  white;
-    font-size: 28px; /* Increased font size */
-    font-family:monospace, "monaco"
+    top: 25%;
+}
 
+body{
+    display: block;
+    margin: 2px;
+    background-color: black;
 }

@@ -8,13 +8,14 @@
 <head title="check-in"></head>
 <body>
 <div class="icon-bar">
-    <a href="home.html"> <i class="fas fa-home"></i></a>
+    <a href="/user/home"> <i class="fas fa-home"></i></a>
     <a href="search-location"><i class="fas fa-search-location"></i></a>
     <a class = "active"><i class="fas fa-map-marker-alt"></i></a>
     <a href="home"> <i class="fas fa-user"></i></a>
-    <a href="/user/notifications" class="notification"><i class="fas fa-bell"></i><span class="badge">3</span></a>
+    <a href="/user/notifications" class="notification"><i class="fas fa-bell"></i><span class="badge" id="badge"></span></a>
 </div>
 <br><br>
+<div id="page-content">
 <div class="msg1">Are you there right now?</div>
 <div id="map"></div>
 <script
@@ -27,7 +28,9 @@
 <br>
 Or choose location manually via <i class="fas fa-search-location"></i>
 </div>
-<p id="demo"></p>
+</div>
+<p class = msg1 id="demo"></p>
 </body>
 <script src="/js/check-in.js"></script>
+<script src="/js/notifications.js"></script>
 </html>
