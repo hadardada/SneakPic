@@ -40,7 +40,7 @@ public class LoadImageService {
         System.out.println("here");
         try {
             String fileName = image.getOriginalFilename();
-            String uploadDir = "D:/user/Desktop/FinalProgect/SneakPic/Server/src/main/resources/static/Albums/"+ albumId;
+            String uploadDir = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\" + albumId;
             FileUploadUtil.saveFile(uploadDir, fileName, image);
             String path = uploadDir+ "/" +fileName; //original image path
 
