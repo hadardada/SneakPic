@@ -2,6 +2,7 @@
 <html lang="en">
 <link rel="stylesheet"  type="text/css" href="/css/icon-bar.css">
 <link rel="stylesheet"   type="text/css" href="/css/check-in.css">
+<link rel="stylesheet" href="/css/sub-bar.css">
 <script src="https://kit.fontawesome.com/9a7aeebf11.js" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
@@ -10,11 +11,15 @@
 </head>
 <body>
 <div class="icon-bar">
-    <a href="home.html"> <i class="fas fa-home"></i></a>
+    <a class = "active"> <i class="fas fa-home"></i></a>
     <a href="search-location"><i class="fas fa-search-location"></i></a>
-    <a class = "active"><i class="fas fa-map-marker-alt"></i></a>
+    <a href="check-in"><i class="fas fa-map-marker-alt"></i></a>
     <a href="home.html"> <i class="fas fa-user"></i></a>
-    <a href="notifications.html" class="notification"><i class="fas fa-bell"></i><span class="badge">3</span></a>
+    <a href="notifications" class="notification"><i class="fas fa-bell"></i><span class="badge">3</span></a>
+</div>
+<div class = "sub-bar">
+    <a class="active"><i class="fas fa-upload"></i></a>
+    <a href="find-photographer"><i class="fas fa-search"></i></a>
 </div>
 <div class="loadAlbum">
 <form method= "POST" action="/user/load-album" id="postAlbumForm" onsubmit="addPositionToAlbum(event)">

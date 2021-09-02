@@ -21,14 +21,16 @@ public class NotificationsService {
     RadiusSearch radiusSearch;
 
     public String getNotificationsForUser(String username) {
-        Iterable<Notification> notificationsItr = notificationsRepository.findAllByUsernameOrderByWasReadAsc(username);
+        Iterable<Notification> notificationsItr = notificationsRepository.findAllByUsernameOrderByCreatedOnDesc(username);
         StringBuilder builder = new StringBuilder();
         notificationsItr.forEach((element) -> {
             builder.append(this.getNotificationMsgByType(element.getTypeNoti(), element.getSourceId(), element.isWasRead()
-                    ,element.getCreatedOn().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd-MM-yyy"))));
+                    ,element.getCreatedOn().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyy"))));
             element.setWasRead(true); // set all notifications to be read
         });
         String notificationElements = builder.toString();
+        if (notificationElements.equals("")) // empty sting = no notifications
+            notificationElements = "<label class=\"noNoti\"> No Notifications To Show </label>";
         return notificationElements;
     }
 

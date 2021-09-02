@@ -18,7 +18,7 @@
     background-color: #578B94; /* Add a hover color */
 }
 
-.active {
+.icon-bar .active {
     background-color: #578B94; /* Add an active/current color */
 }
 

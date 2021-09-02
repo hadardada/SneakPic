@@ -3,13 +3,19 @@
 /* Add padding to containers */
 .container {
     padding: 16px;
+    font-family:Segoe UI, "Segoe UI";
+    font-size: larger;
 
 }
 
 .logo {
-    margin-top: fill;
-    background-size: 150% auto;
+    font-family:Segoe UI, "Segoe UI";
+    width:100%;
     background-color: #08434e;
+    overflow: auto;
+    color: white;
+    font-size: large;
+
 }
 
 /* Full-width input fields */
@@ -54,6 +60,9 @@ a {
     color: dodgerblue;
 }
 
+body{
+    margin: 0;
+}
 /* Set a grey background color and center the text of the "sign in" section */
 .signin {
     background-color: #f1f1f1;

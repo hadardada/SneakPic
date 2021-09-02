@@ -23,7 +23,8 @@ public class Register {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public void addNewUser(UserRegistrationDetails userRegistrationDetails){
+    public String addNewUser(UserRegistrationDetails userRegistrationDetails){
         userService.registerNewUserAccount(userRegistrationDetails);
+        return "redirect:/user/home";
     }
 }

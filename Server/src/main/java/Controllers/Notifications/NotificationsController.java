@@ -30,9 +30,9 @@ public class NotificationsController {
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> </head>\n" +
                 "<body>" +
                 "<div class=\"icon-bar\">\n" +
-                "    <a href=\"home.html\"> <i class=\"fas fa-home\"></i></a>\n" +
-                "    <a href=\"search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
-                "    <a class = \"check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
+                "    <a href=\"/user/home\"> <i class=\"fas fa-home\"></i></a>\n" +
+                "    <a href=\"/user/search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
+                "    <a href= \"/user/check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
                 "    <a href=\"home.html\"> <i class=\"fas fa-user\"></i></a>\n" +
                 "    <a class = \"active\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
                 "</div><br>"+

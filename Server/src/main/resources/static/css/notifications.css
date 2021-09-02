@@ -2,6 +2,13 @@
     width: 100%;
 }
 
+.noNoti{
+    font-family:Segoe UI, "Segoe UI";
+    text-align: center;
+    color: gray;
+    font-weight: normal;
+    font-size: 25px;
+}
 .notis a{
     display: block;
     font-family:Segoe UI, "Segoe UI";
@@ -16,7 +23,11 @@
 
  .createdOn{
     color: gray;
-}
+     font-weight: normal;
+     font-size: 15px;
+
+
+ }
 .new {
     background-color: #CDEAF2;
 }
@@ -27,4 +38,8 @@
 }
 .icon-bar a:hover {
     background-color: dimgrey;
+}
+
+body{
+    background-color:#CDEAF2;
 }

@@ -1,0 +1,30 @@
+input[type=submit] {
+    position: static;
+    font-family:Segoe UI, "Segoe UI";
+    font-weight: bold;
+    background-color: #08434e;
+    color: white;
+    text-decoration: none;
+    padding: 15px 26px;
+    display: inline-block;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 30px;
+    align-items: center;
+
+
+}
+
+body{
+    background-color:#DCEDEF;
+
+}
+
+.allforms{
+    font-family:Segoe UI, "Segoe UI";
+    font-weight: bold;
+    color: #08434e;
+    background-color: white;
+    border-radius: 5%;
+
+}

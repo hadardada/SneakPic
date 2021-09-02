@@ -5,11 +5,20 @@ body{
     background-position: bottom;
 
 }
+
 .loginForm{
     position:relative;
     top:300px;
 }
-
+.register{
+    position: relative;
+    font-family:Segoe UI, "Segoe UI";
+    font-size: 20px;
+    color: #cccccc;
+}
+.register a{
+    color: white;
+}
 .msgFromServer{
     display: none;
     color: red;
