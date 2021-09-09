@@ -33,7 +33,7 @@ public class NotificationsController {
                 "    <a href=\"/user/search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
                 "    <a href= \"/user/check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
                 "    <a href=\"home.html\"> <i class=\"fas fa-user\"></i></a>\n" +
-                "    <a class = \"active\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
+                "    <a class = \"active\" href=\"/user/notifications\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
                 "</div><br>"+
                 "<div class = \"notis\">\n"+
                 notificationsService.getNotificationsForUser(username)+"\n </div></body></html>";
