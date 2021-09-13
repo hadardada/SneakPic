@@ -1,0 +1,15 @@
+.details{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    margin-block-start:70px;
+
+}
+
+.details i{
+    float: left; /* Float links side by side */
+    text-align: center; /* Center-align text */
+    width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+    padding: 12px 0; /* Some top and bottom padding */
+    color: darkgrey; /* White text color */
+    font-size: 40px; /* Increased font size */
+}

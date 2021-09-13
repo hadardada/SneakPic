@@ -3,6 +3,9 @@
     flex-wrap: nowrap;
     padding: 0 4px;
     flex-direction: row;
+    margin-block-start:45px;
+    margin-block-end: 150px;
+
 }
 
 /* Create four equal columns that sits next to each other */

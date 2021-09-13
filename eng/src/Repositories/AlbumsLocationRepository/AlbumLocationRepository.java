@@ -14,6 +14,7 @@ import java.sql.Time;
 import java.util.List;
 
 public interface AlbumLocationRepository extends JpaRepository<AlbumsLocation, Long> ,QuerydslPredicateExecutor{
+    AlbumsLocation findByAlbumId (Long id);
 
 
 }

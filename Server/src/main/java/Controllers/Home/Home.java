@@ -17,13 +17,5 @@ public class Home {
         return "redirect:/user/home";
     }
 
-//    @GetMapping ("/load-image")
-//    public String loadImage(){ return "register"; }
-
-    @GetMapping ("/admin")
-    public String admin(){
-        return ("<h>welcome admin</h>");
-    }
-
 
 }

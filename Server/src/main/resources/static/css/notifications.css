@@ -1,5 +1,7 @@
 .notis{
     width: 100%;
+    margin-block-start:70px;
+
 }
 
 .noNoti{
@@ -8,6 +10,7 @@
     color: gray;
     font-weight: normal;
     font-size: 25px;
+
 }
 .notis a{
     display: block;

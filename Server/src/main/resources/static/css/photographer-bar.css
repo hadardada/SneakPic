@@ -1,0 +1,24 @@
+.photographer-bar{
+    position: fixed;
+    bottom: 0px;
+    background-color: #08434e;
+    font-family:Segoe UI, "Segoe UI";
+    color: white;
+    width: 100%; /* Full-width */
+    font-size:24px;
+    }
+.field{
+    font-weight: bolder;
+}
+.field a{
+    color: white;
+}
+.photographer-bar a {
+   /* float: left; /* Float links side by side */
+   /* text-align: center; /* Center-align text */
+   /* width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
+    color: grey;
+    font-size: 40px; /* Increased font size */
+    text-decoration: none;
+}
+

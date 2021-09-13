@@ -8,12 +8,13 @@ import java.util.Date;
 @Table(name="Notifications")
 public class Notification {
     @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
+    // @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
 
     private String username; // to whom this notification sent to
     private short typeNoti;
     private Long sourceId; // id of the object (album / purchase) who triggered this notification
+    private double rate;
     boolean wasRead;
     boolean wasWatched;
     Timestamp createdOn;
@@ -28,6 +29,15 @@ public class Notification {
         this.wasRead = false; // new notifications have never been read before, therefore this field is set to false at start
         this.wasWatched = false; // same as above
         this.createdOn = createdOn;
+        this.rate = 0;
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
     public String getUsername() {
