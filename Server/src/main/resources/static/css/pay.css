@@ -26,6 +26,7 @@
 .download a{
     color: #67acaa;
     font-size: 40px;
+    text-decoration: none;
 }
 .card{
     padding: 6px 12px;

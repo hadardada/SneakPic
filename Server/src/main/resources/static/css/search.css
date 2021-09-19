@@ -29,7 +29,7 @@
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
-
+    background-color: white;
 }
 .search-line a{
     font-size: 35px; /* Increased font size */
@@ -38,7 +38,7 @@
 .search-line input[type=text]{
     border-width:0px;
     border-left: none;
-    width: 90%;
+    width: 80%;
 }
 
 .errorMsg{
@@ -51,6 +51,3 @@
     border-color: red;
 }
 
-body{
-
-}

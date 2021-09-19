@@ -2,8 +2,11 @@ const albumsBox = document.getElementById('AlbumsBox');
 const viewAlbums = document.getElementById('title-albums');
 const MY_UPLOADS = 1;
 const MY_MATCHES = 2;
+var currLat;
+var currLng;
 
-async function injectDetails(){
+
+ async function injectDetails(){
     //check if it's a view my uploaded albums page (for photographers)
     //or view-matching albums (for all users)
     const url = window.location.href;
@@ -40,20 +43,36 @@ async function injectDetails(){
 
 function createResult(albumDetails, type){
     for (i=0;i<albumDetails.length;i++){
-        const resultBoxDiv =document.createElement("a");
-        const nameSpan = document.createElement("span");
+        const resultBoxDiv =document.createElement("div");
+        resultBoxDiv.className="result";
+        const resultBoxA =document.createElement("a");
+        const nameSpan = document.createElement("div");
         nameSpan.innerText ="Title: "+albumDetails[i].name;
-        const br = document.createElement('br');
-        const rangeSpan = document.createElement("span");
-        rangeSpan.innerText ="Time Range: "+albumDetails[i].fromTime+" - "+ albumDetails[i].toTime;
-        const uploadedTimeSpan = document.createElement("span");
+        const rangeFromSpan = document.createElement("div");
+        rangeFromSpan.innerText ="From: "+albumDetails[i].fromTime;
+        const rangeToSpan = document.createElement("div");
+        rangeToSpan.innerText ="To: "+albumDetails[i].toTime;
+        const uploadedTimeSpan = document.createElement("div");
         uploadedTimeSpan.innerText="Uploaded On: "+albumDetails[i].uploadTime;
-        const uploadedBySpan = document.createElement("span");
+        const uploadedBySpan = document.createElement("div");
         uploadedBySpan.innerText = "Uploaded By: "+albumDetails[i].photographer;
-        resultBoxDiv.appendChild(nameSpan);
-        nameSpan.append(br,rangeSpan,br,uploadedTimeSpan,br);
+        const mapDiv = document.createElement("div");
+        mapDiv.id = "map";
+        resultBoxA.appendChild(nameSpan);
+        resultBoxA.appendChild(rangeFromSpan);
+        resultBoxA.appendChild(rangeToSpan);
+        resultBoxA.appendChild(uploadedTimeSpan);
         if (type=== MY_UPLOADS)
-            nameSpan.append(uploadedBySpan, br);
-        resultBoxDiv.href = "/user/view-album/"+albumDetails[i].albumId;
+            resultBoxA.appendChild(uploadedBySpan);
+        resultBoxA.href = "/user/view-album/"+albumDetails[i].albumId;
+        const mapImg = document.createElement("img");
+
+        mapImg.src ="https://maps.googleapis.com/maps/api/staticmap?center="
+        +albumDetails[i].lat+","+albumDetails[i].lng+"&zoom=15&size=250x100&markers=color:blue%7C"+
+            +albumDetails[i].lat+","+albumDetails[i].lng+"&key=AIzaSyBgQppaGx-QFHdBvhmV4YD1wPEs_EygwJc";
+        mapDiv.appendChild(mapImg);
+        resultBoxA.appendChild(mapDiv);
+        resultBoxDiv.appendChild(resultBoxA);
         albumsBox.appendChild(resultBoxDiv);
 }}
+

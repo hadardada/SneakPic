@@ -9,15 +9,18 @@ import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.AlbumsLocationRepository.AlbumLocationRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.NotificationsRepository.NotificationsRepository;
+import Repositories.PurchaseRepository.PurchaseRepository;
 import Repositories.UserRepository.UserRepository;
 import S3Config.AmazonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +44,9 @@ public class ViewAlbumService {
     NotificationsRepository notificationsRepository;
 
     @Autowired
+    PurchaseRepository purchaseRepository;
+
+    @Autowired
     private AmazonConfig amazonConfig;
 
     public boolean isThePhotographerWatching(Long albumId, String viewerUsername) {
@@ -51,17 +57,27 @@ public class ViewAlbumService {
             return false;
     }
 
-    public String generateImageTags(Long albumId, String viewerUsername) {
+    public String generateImageTags(Long albumIdGiven, String viewerUsername, boolean downloaded) {
         //dictates whether the viewer is the photographer or not
-        boolean isPhotographer = isThePhotographerWatching(albumId, viewerUsername);
+        boolean isPhotographer =((downloaded)||(isThePhotographerWatching(albumIdGiven, viewerUsername)));
         //creates image elements to send to browser
-        //the images are ordered in 4 divs
+        //the images are ordered in 2 divs
         StringBuilder sb = new StringBuilder();
         sb.append("<div class=\"row\">\n");
-        List<MyImage> images = (List<MyImage>) myImageRepository.findAllByAlbumIdOrderByIdAsc(albumId);
+        List<MyImage> images;
+        if (!downloaded) // view album
+            images = (List<MyImage>) myImageRepository.findAllByAlbumIdOrderByIdAsc(albumIdGiven);
+        else { // view downloaded photos from profile menu
+            images = new ArrayList<>();
+            purchaseRepository.getAllByBuyerId(viewerUsername).forEach(
+                    (elem)->{
+                        images.add(myImageRepository.findById(elem.getImageId()).get());
+                    }
+            );
+        }
         int imagesQuantity = images.size();
         if (imagesQuantity == 0)//no photos to show
-            sb.append("<div class= noPhotos> No photos on this album</div>");
+            sb.append("<div class= noPhotos> No photos to show</div>");
         else {
             StringBuilder column1 = new StringBuilder("<div class=\"column\">\n");
             StringBuilder column2 = new StringBuilder("<div class=\"column\">\n");
@@ -70,8 +86,15 @@ public class ViewAlbumService {
 
             images.forEach((elem) -> {
                 Long imgId = elem.getId();
-                String imgString = "<a href=\"/user/view-image/" + albumId.toString() + "/" + imgId.toString() +
-                        "\"><img src=\"" + getRelativePath(imgId, albumId, isPhotographer) + "\"></a>\n";
+                Long albumId = elem.getAlbumId();
+                String imgString;
+                if (!downloaded){
+                    imgString =  "<a href=\"/user/view-image/" + albumId.toString() + "/" + imgId.toString() +
+                            "\"><img src=\"" + getRelativePath(imgId, albumId, isPhotographer) + "\"></a>\n";
+                }
+                else // href is a link to download the photo
+                    imgString =  "<a href=\"" +getRelativePath(imgId, albumId, isPhotographer)+
+                            "\"><img src=\"" + getRelativePath(imgId, albumId, isPhotographer) + "\"></a>\n";
                 //each iteration add the img to one of the dives, decided by the altering index
                 if (images.indexOf(elem) % 2 == 0)
                     column1.append(imgString);
@@ -129,7 +152,7 @@ public class ViewAlbumService {
         return "<div class=\"photographer-bar\">\n" +
                 "    <p>Album Name: <span class=\"field\">" + album.getName() + "</span></p>\n" +
                 "    Date:<span class=\"field\"> " + timeOf.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + "</span><br>\n" +
-                "    Photographer: <span class=\"field\">" + photographer.getFirstName() + " " + photographer.getLastName() + "<a href =\"/user/view-photographer/" +
+                "    Photographer: <span class=\"field\">" + photographer.getFirstLetterIsCapitalize() + "<a href =\"/user/view-photographer/" +
                 album.getPhotographer() + "\"> <i class=\"fas fa-user-circle\"></i></a></span><br>\n" +
                 "    Rate Album:<span class=\"stars\"id=\"rate\">" + this.printStars(albumId) + "</span><br></div>";
     }
@@ -153,8 +176,8 @@ public class ViewAlbumService {
 
     }
 
-    public String getImgUrlForUser(Long albumId, Long imgId) {
-        return amazonConfig.createTempUrlForImg(albumId, imgId).toExternalForm();
+    public URL getImgUrlForUser(Long albumId, Long imgId) {
+        return amazonConfig.createTempUrlForImg(albumId, imgId);
     }
 
     public Set<ViewAlbumDetails> getMatchingAlbums(String username) {
@@ -163,8 +186,9 @@ public class ViewAlbumService {
 
         notificationsRepository.findAllByUsernameAndTypeNoti(username, albumNotiType).forEach(
                 (elem) -> { // for each notification creates a ViewAlbumDetails instance
+                    User photographer = userRepository.findByUsername(albumRepository.getAlbumById(elem.getSourceId()).get().getPhotographer()).get();
                     results.add(new ViewAlbumDetails(albumRepository.findById(elem.getSourceId()).get(),
-                            albumLocationRepository.findByAlbumId(elem.getSourceId())));
+                            albumLocationRepository.findByAlbumId(elem.getSourceId()),photographer));
                 }
         );
         return results;
@@ -172,10 +196,12 @@ public class ViewAlbumService {
     }
 
     public Set<ViewAlbumDetails> getMyAlbums(String username) {
+        User photographer = userRepository.findByUsername(username).get();
         Set<ViewAlbumDetails> results = new HashSet<>();
-        albumRepository.getAlbumsByPhotographer(username).forEach(
-                (elem) -> {
-                    results.add(new ViewAlbumDetails(elem, albumLocationRepository.findByAlbumId(elem.getId())));
+        Iterable<Album> albums  = albumRepository.findAllByPhotographer(username);
+        albums.forEach(
+                (element) -> {
+                    results.add(new ViewAlbumDetails(element, albumLocationRepository.findByAlbumId(element.getId()), photographer));
                 });
         return results;
     }

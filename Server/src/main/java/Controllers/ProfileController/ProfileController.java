@@ -36,7 +36,7 @@ public class ProfileController {
         return "view-albums";
     }
 
-    @RequestMapping(value = "/user/view-matching-albums")
+    @RequestMapping(value = "/user/view-my-albums")
     public String getMyAlbumsPage(){
         return "view-albums";
     }

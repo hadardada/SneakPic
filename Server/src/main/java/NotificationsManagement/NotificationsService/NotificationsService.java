@@ -140,7 +140,7 @@ public class NotificationsService {
         //user's rate is found in the notification database
         short type = 2;
         Notification noti = notificationsRepository.getFirstByUsernameAndSourceIdAndTypeNoti(voter,albumId, type);
-        if (rate == 0)
+        if (noti.getRate()== 0)
             noti.setRate(rate);
         else
             return false;
@@ -159,7 +159,8 @@ public class NotificationsService {
         int numOfAlbums =( (List<Album>) albumRepository.getAlbumsByPhotographer(ratedAlbum.getPhotographer())).size();
         User photographer = userRepository.getFirstByUsername(ratedAlbum.getPhotographer());
         double currUserRating = photographer.getRating();
-        double newUserRating = (numOfAlbums*currRating-currRating+newRating)/(numOfAlbums);
+        double newUserRating = (numOfAlbums*currUserRating-currUserRating+newRating)/(numOfAlbums);
+        photographer.setRating(newUserRating);
         userRepository.save(photographer);
         return true;
     }

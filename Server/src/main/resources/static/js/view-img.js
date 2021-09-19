@@ -23,7 +23,7 @@ async function injectLinks() {
         method: 'get',
     });
     if (response1.ok)
-        document.getElementById('cartBtn').href = "/user/payment/" + albumId + photoId;
+        document.getElementById('cartBtn').href = "/user/payment" + albumId + photoId;
     else
         document.getElementById('cartBtn').style.color = "grey";
 

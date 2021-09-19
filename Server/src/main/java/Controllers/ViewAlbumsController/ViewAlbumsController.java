@@ -20,7 +20,7 @@ ViewAlbumService viewAlbumService;
 
     private Gson gson = new Gson();
 
-    @RequestMapping(value = "/user/view-matching-albums")
+    @RequestMapping(value = "/user/get-matching-albums")
     //returns a set of albums that matches the locations of the logged user
     //(this data is already saved in the Notifications table)
     public ResponseEntity getMatchingAlbums(){
@@ -32,7 +32,7 @@ ViewAlbumService viewAlbumService;
             return new ResponseEntity(gson.toJson(albums), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/user/view-my-albums")
+    @RequestMapping(value = "/user/get-my-albums")
     //returns a set of albums that the logged user uploaded
     public ResponseEntity getMyAlbums(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

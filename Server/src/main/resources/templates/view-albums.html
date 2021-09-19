@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="/css/icon-bar.css">
+<link rel="stylesheet" href="/css/view-albums.css">
+<script src="https://kit.fontawesome.com/9a7aeebf11.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>View Albums</title>
 </head>
+
+<div class="icon-bar">
+    <a href="home"> <i class="fas fa-home"></i></a>
+    <a href = "search-location"><i class="fas fa-search-location"></i></a>
+    <a href = "check-in"><i class="fas fa-map-marker-alt"></i></a>
+    <a class = "active" href="myProfile"> <i class="fas fa-user"></i></a>
+    <a href="notifications" class="notification"><i class="fas fa-bell"></i><span class="badge" id = "badge"></span></a>
+</div>
 <body onload="injectDetails()">
 <h2 class = "title-albums" id="title-albums"></h2>
 <div class = "AlbumsBox" id="AlbumsBox">
 
 </div>
 </body>
-<script src="js/view-albums.js"/>
+<script src="/js/notifications.js"></script>
+<script src="/js/view-albums.js"></script>
+
 </html>

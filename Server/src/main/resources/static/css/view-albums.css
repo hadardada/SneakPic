@@ -1,0 +1,21 @@
+.result{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: white;
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    font-size: 20px; /* Increased font size */
+    font-family: Tahoma, sans-serif;
+    color: black;
+}
+
+.result a{
+    text-decoration: none;
+color:black;
+}
+
+#map{
+    width:80%;
+    height:100px;
+}

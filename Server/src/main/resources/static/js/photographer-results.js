@@ -38,6 +38,7 @@ async function getSearchResults(event) {
 function createResult(results){
     for (i=0;i<results.length;i++){
         const resultBoxDiv =document.createElement("div");
+        resultBoxDiv.className = "resultBox";
         const nameSpan = document.createElement("span");
         nameSpan.innerText = results[i].name;
         const emailA = document.createElement("a");

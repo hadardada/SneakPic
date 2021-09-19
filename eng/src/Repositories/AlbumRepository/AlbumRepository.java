@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface AlbumRepository extends JpaRepository<Album, Long> {
     Iterable<Album> getAlbumsByPhotographer(String username);
+    Iterable<Album> findAllByPhotographer(String username);
     Optional<Album> findById(Long id);
     Optional<Album> getAlbumById(Long id);
     Optional<Album> findFirstByPhotographerOrderByUploadedDateDesc(String photographer);

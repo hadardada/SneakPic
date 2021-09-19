@@ -1,5 +1,7 @@
 const payButton = document.getElementById('finalPay');
 const serverMsg = document.getElementById('msg');
+const serverMsg1 = document.getElementById('msg1');
+
 const downloadPic = document.getElementById('download');
 const paymentDetailsBox = document.getElementById('cardDetails');
 const priceBox = document.getElementById('pay');
@@ -11,18 +13,17 @@ payButton.addEventListener('click', async event =>{
     const indx = urlArr.findIndex(isPayment);
     const photoId = "/"+urlArr[indx+2];
     const albumId = "/"+urlArr[indx+1];
-    payButton.href = "/user/add-purchase"+albumId+photoId;
     const response = await fetch ("/user/add-purchase"+albumId+photoId, {
         method:"post",
     })
     paymentDetailsBox.style.display="none";
     priceBox.style.display="none";
 
-    if (response.ok){
-        serverMsg.innerText = "Photo purchase is successfully done!";
-        response.text().then(function (text){
-            downloadPic.href = text;
-        });
+    if (response.status == 200){
+        serverMsg1.innerText = "Photo purchase is successfully done!";
+        var mash = await response.json();
+        downloadPic.href = mash;
+        downloadPic.style.textDecoration = "none";
         serverMsg.style.display = "block";
         downloadPic.style.display = "block";
     }
@@ -34,12 +35,12 @@ payButton.addEventListener('click', async event =>{
     }
 
     else if (response.status == 208){ // this photo was already purchased by this user
-        serverMsg.innerText = "You've already purchased this photo! You won't be charged for this attempt";
-        response.text().then(function (text){
-            downloadPic.href = text;
-        });
-        serverMsg.style.display = "block";
+        serverMsg1.innerText = "You've already purchased this photo! You won't be charged for this attempt";
+        var mash = await response.json();
+        downloadPic.href = mash;
+        downloadPic.style.textDecoration = "none";
         downloadPic.style.display = "block";
+        serverMsg.style.display = "block";
     }
 
 });

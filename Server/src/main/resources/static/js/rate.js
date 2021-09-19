@@ -7,22 +7,20 @@ const rateStar5 = document.getElementById('star5');
 
 
 rateStar1.addEventListener("mouseenter", hovered);
-rateStar1.addEventListener("click", hovered);
-rateStar1.addEventListener("dblclick", rate);
+rateStar1.addEventListener("click", rate);
 
 
 rateStar2.addEventListener("mouseenter", hovered);
-rateStar2.addEventListener("click", hovered);
-rateStar2.addEventListener("dblclick", rate);
+rateStar2.addEventListener("click", rate);
 
 rateStar3.addEventListener("mouseenter", hovered);
-rateStar3.addEventListener("dblclick", hovered);
+rateStar3.addEventListener("dblclick", rate);
 
 rateStar4.addEventListener("mouseenter", hovered);
-rateStar4.addEventListener("click", hovered);
+rateStar4.addEventListener("click", rate);
 
 rateStar5.addEventListener("mouseenter", hovered);
-rateStar5.addEventListener("click", hovered);
+rateStar5.addEventListener("click", rate);
 
 
  function hovered(event){
@@ -36,9 +34,9 @@ if (event.target=== rateStar1)
     rateNum = 1;
 else if(event.target === rateStar2)
     rateNum =2;
-else if(event.target === rateStar2)
+else if(event.target === rateStar3)
     rateNum =3;
-else if(event.target === rateStar2)
+else if(event.target === rateStar4)
     rateNum =4;
 else
     rateNum = 5;

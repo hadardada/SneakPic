@@ -10,10 +10,7 @@ import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 
 public class ViewAlbumDetails {
-    @Autowired
-    UserRepository userRepository;
-
-    private Long albumId;
+       private Long albumId;
     private String name;
     private String photographer;
     private float lat;
@@ -22,10 +19,10 @@ public class ViewAlbumDetails {
     private String toTime;
     private String uploadTime;
 
-    public ViewAlbumDetails(Album album, AlbumsLocation location){
+    public ViewAlbumDetails(Album album, AlbumsLocation location, User photographer){
         this.albumId =album.getId();
         this.name = album.getName();
-        this.photographer = userRepository.getFirstByUsername(album.getPhotographer()).getFirstLetterIsCapitalize();
+        this.photographer = photographer.getFirstLetterIsCapitalize();
         this.lat = location.getLatitude();
         this.lng = location.getLongitude();
         this.fromTime = location.getFromTime().toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyy"));
