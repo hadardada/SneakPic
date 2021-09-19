@@ -4,10 +4,16 @@ import Entities.Album.Album;
 import Entities.Image.MyImage;
 import Repositories.AlbumRepository.AlbumRepository;
 import Repositories.MyImageRepository.MyImageRepository;
+import Repositories.PurchaseRepository.PurchaseRepository;
 import Repositories.UserRepository.UserRepository;
 import UsersManagement.LoadImageServiece.AlbumDetails;
+import UsersManagement.LoadImageServiece.ViewAlbumService;
+import UsersManagement.PurchaseService.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Jsp;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,82 +24,43 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 public class PurchaseController {
 
-    //@Autowired
-   // private PurchaseService purchaseService;
     @Autowired
     UserRepository userRepository;
     @Autowired
     AlbumRepository albumRepository;
     @Autowired
     MyImageRepository myImageRepository;
+    @Autowired
+    PurchaseService purchaseService;
+    @Autowired
+    ViewAlbumService viewAlbumService;
 
-
-    @RequestMapping( value = "/user/add-purchase/{albumId}")
-    public String showRelevantAlbums(@PathVariable String albumId){
-        //lets say for now, that all relevant albums are even. thaen we collect by position
-
-        //ModelAndView listOfAlbums = new ModelAndView("Albums");
-//        List<Album> albums = albumRepository.findAll().stream().filter(s->s.getId()%2 ==0).collect(Collectors.toList());
-//        model.addAttribute(albums);
-        //listOfAlbums.addObject(albums);
-        Long id = Long.getLong("albumId");
-        //Album album28 = albumRepository.getById(id);
-        //C:\Users\dhnhd\Desktop\SneakPic\SneakPic\Server\src\main\resources\static\Albums
-        List<MyImage> imagesOfAlbum = myImageRepository.findAll().stream().filter(i->i.getAlbumId() == id).collect(Collectors.toList());
-
-        List<String> imagesMarkedPath = new ArrayList<>();
-        imagesOfAlbum.forEach(i -> imagesMarkedPath.add(i.getPathMarked().substring(73)));
-
-       // model.addAttribute("images",imagesMarkedPath);
-
-        return "<html>\n" +
-                "<link rel=\"stylesheet\"  type=\"text/css\" href=\"/css/icon-bar.css\">\n" +
-                "<link rel=\"stylesheet\"   type=\"text/css\" href=\"/css/notifications.css\">"+
-                "<script src=\"https://kit.fontawesome.com/9a7aeebf11.js\" crossorigin=\"anonymous\"></script>\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "<meta charset=\"UTF-8\">"+
-                "<head>\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> </head>\n" +
-                "<body>" +
-                "<div class=\"icon-bar\">\n" +
-                "    <a href=\"/user/home\"> <i class=\"fas fa-home\"></i></a>\n" +
-                "    <a href=\"/user/search-location\"><i class=\"fas fa-search-location\"></i></a>\n" +
-                "    <a href= \"/user/check-in\"><i class=\"fas fa-map-marker-alt\"></i></a>\n" +
-                "    <a href=\"home.html\"> <i class=\"fas fa-user\"></i></a>\n" +
-                "    <a class = \"active\" class=\"notification\"><i class=\"fas fa-bell\"></i><span class=\"badge\"></span></a>\n" +
-                "</div><br>"+
-                generateImageTags(imagesMarkedPath) +
-                "</body>\n" +
-                "</html>";
+    @RequestMapping(value = "/user/payment/{albumId}/{imgId}")
+    public String showPaymentPage() {
+        //returns payment html page
+        return "payment";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/user/add-purchase/{path}")
-    public void addNewAlbum(@RequestBody AlbumDetails albumDetails, @PathVariable String path) throws IOException {
-       // this.currentAlbumId = loadAlbumService.addNewAlbum(albumDetails, userRepository, albumRepository);
-        System.out.println("here");
-    }
+    @RequestMapping(method = RequestMethod.POST, value = "/user/add-purchase/{albumId}/{imgId}")
+    public ResponseEntity<String> addPurchase(@PathVariable Long albumId, @PathVariable Long imgId) {
+        //get buyer from logged in user
+        String buyer = SecurityContextHolder.getContext().getAuthentication().getName();
+        //get seller from album's photographer
+        String seller = albumRepository.getAlbumById(albumId).get().getPhotographer();
 
-
-    private String generateImageTags(List<String> paths){
-        StringBuilder sb = new StringBuilder();
-        for (String path: paths) {
-            //sb.append("<form id=\"singlePurchase\" method=\"post\" action=\"/user/add-purchase"+ path +">\n");
-//            sb.append("<li>\n");
-//            sb.append("<form method=\"post\" action=\"/user/add-purchase"+ path +">\n");
-
-            sb.append("<img height=300 width=300 src=\""+path+"\">\n");
-//            sb.append("<button type=\"button\" name=\"purchase\">\n" +
-//                    "<input type=\"submit\" value=\"Purchase\">\n");
-
-//            sb.append("</form>\n");
-//            sb.append("</li>\n");
-           // sb.append("</form>\n");
-
+        //if the buyer is the album's photographer
+        if (buyer.equals(seller))
+            return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        //else
+        String url = viewAlbumService.getImgUrlForUser(albumId, imgId); //get download temporary URL
+        if (purchaseService.addNewPurchase(buyer, seller, albumId, imgId)) //if it's a new purchase
+        {
+            return new ResponseEntity(url, HttpStatus.OK);
         }
-
-        return sb.toString();
+        else //if buyer already purchased this img, still gets the url but get a massage from server
+            return new ResponseEntity(url, HttpStatus.ALREADY_REPORTED);
     }
 }

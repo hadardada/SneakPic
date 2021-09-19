@@ -1,0 +1,56 @@
+.results{
+    border-bottom-color: darkgray;
+    color: grey;
+
+}
+
+.resultBox {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: white;
+    width: 80%;
+    margin: 8px 0;
+    padding: 12px 20px;
+    margin: auto;
+    padding: 20px;
+    font-size: 28px; /* Increased font size */
+    font-family: Tahoma, sans-serif;
+
+}
+
+.resultBox a{
+    text-decoration: none;
+
+}
+.search-line{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+
+}
+.search-line a{
+    font-size: 35px; /* Increased font size */
+}
+
+.search-line input[type=text]{
+    border-width:0px;
+    border-left: none;
+    width: 90%;
+}
+
+.errorMsg{
+    display: none;
+    color: red;
+    font-family: Tahoma, sans-serif;
+    font-weight: bold;
+    position: static;
+    font-size: 28px;
+    border-color: red;
+}
+
+body{
+
+}

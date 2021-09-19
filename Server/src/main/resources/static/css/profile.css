@@ -1,15 +1,33 @@
-.details{
+.details, .myOptions a{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    margin-block-start:70px;
+    background-color: white;
+    width: 80%;
+    margin: 8px 0;
+    padding: 5px 20px;
+    font-size: 20px; /* Increased font size */
+    font-family: Tahoma, sans-serif;
+    text-decoration: none;
+    color: black;
+    float: left;
+}
+
+.ifPhotographer{
+    display: none;
+}
+
+.details{
+    font-size: 30px; /* Increased font size */
+}
+.details icon{
+    float: right;
+    text-align: center;
+    width: 20%;
+    padding: 12px 0;
+    color: #a0a0a0;
+    font-size: 40px;
 
 }
 
-.details i{
-    float: left; /* Float links side by side */
-    text-align: center; /* Center-align text */
-    width: 20%; /* Equal width (5 icons with 20% width each = 100%) */
-    padding: 12px 0; /* Some top and bottom padding */
-    color: darkgrey; /* White text color */
-    font-size: 40px; /* Increased font size */
-}
+
+

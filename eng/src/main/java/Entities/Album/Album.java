@@ -16,17 +16,35 @@ public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) // so the ID is generated automatically
     private Long id;
-
     private String name;
     private Timestamp uploadedDate;
     private String photographer;
+    private int numOfRaters;
+    private double rating;
 
-    public String getAlbumPath() {
-        return albumPath;
+    public Album(){};
+
+    public Album (String name, Timestamp uploadedDate, String photographer){
+        this.name = name;
+        this.uploadedDate = uploadedDate;
+        this.photographer = photographer;
+        numOfRaters = 0;
+        rating = 0;
+    }
+    public double getRating() {
+        return rating;
     }
 
-    public void setAlbumPath(String albumPath) {
-        this.albumPath = albumPath;
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getNumOfRaters() {
+        return numOfRaters;
+    }
+
+    public void setNumOfRaters(int numOfRaters) {
+        this.numOfRaters = numOfRaters;
     }
 
     private String albumPath;

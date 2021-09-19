@@ -10,6 +10,7 @@ import Repositories.AlbumsLocationRepository.AlbumLocationRepository;
 import Repositories.MyImageRepository.MyImageRepository;
 import Repositories.NotificationsRepository.NotificationsRepository;
 import Repositories.UserRepository.UserRepository;
+import S3Config.AmazonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -36,7 +39,9 @@ public class ViewAlbumService {
 
     @Autowired
     NotificationsRepository notificationsRepository;
-    //private static String absolutePath = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\";
+
+    @Autowired
+    private AmazonConfig amazonConfig;
 
     public boolean isThePhotographerWatching(Long albumId, String viewerUsername) {
         String albumPhotographer = albumRepository.getById(albumId).getPhotographer();
@@ -85,11 +90,17 @@ public class ViewAlbumService {
     }
 
 
+    /* This method returns image src path based on the user who views the album
+    If the user is the photographer of the album - creates temps url to view the unmarked photos
+    (since they are all stored in a private bucked, the access is by a temp link)
+    If the viewer is any other user - photos are shown from the marked bucket, which is public and
+    does not require an access with a special URL
+     */
     public String getRelativePath(Long imgId, Long albumId, boolean isThePhotographer) {
         if (isThePhotographer)// meaning the one who views the album is the photographer and can watch without watermarks
-            return "/Albums/" + albumId.toString() + "/" + imgId.toString() + ".jpeg";
+            return amazonConfig.createTempUrlForImg(albumId, imgId).toString();
         else // view album with watermarks
-            return "/Albums/" + albumId.toString() + "/marked/" + imgId.toString() + "copy.jpeg";
+            return "https://sneakpicbucketmarked.s3.us-east-2.amazonaws.com/" + albumId + "/" + imgId + ".jpeg";
     }
 
     public boolean isImageFirst(Long albumId, Long imgId) {
@@ -126,9 +137,10 @@ public class ViewAlbumService {
     public String printStars(Long albumId) {
         String viewerUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         StringBuilder sb = new StringBuilder();
-        if (notificationsRepository.findFirstByUsernameAndSourceId(viewerUsername, albumId).isPresent()) {
+        short type = 2;
+        if (notificationsRepository.findFirstByUsernameAndSourceIdAndTypeNoti(viewerUsername, albumId, type).isPresent()) {
             //if viewer already rated this album
-            if (notificationsRepository.findFirstByUsernameAndSourceId(viewerUsername, albumId).get().getRate() > 0) {
+            if (notificationsRepository.findFirstByUsernameAndSourceIdAndTypeNoti(viewerUsername, albumId, type).get().getRate() > 0) {
                 sb.append(" already rated by you");
                 return sb.toString();
             }
@@ -139,5 +151,32 @@ public class ViewAlbumService {
         }
         return sb.toString();
 
+    }
+
+    public String getImgUrlForUser(Long albumId, Long imgId) {
+        return amazonConfig.createTempUrlForImg(albumId, imgId).toExternalForm();
+    }
+
+    public Set<ViewAlbumDetails> getMatchingAlbums(String username) {
+        short albumNotiType = 2; // find only notifications that are album's matches
+        Set<ViewAlbumDetails> results = new HashSet<>();
+
+        notificationsRepository.findAllByUsernameAndTypeNoti(username, albumNotiType).forEach(
+                (elem) -> { // for each notification creates a ViewAlbumDetails instance
+                    results.add(new ViewAlbumDetails(albumRepository.findById(elem.getSourceId()).get(),
+                            albumLocationRepository.findByAlbumId(elem.getSourceId())));
+                }
+        );
+        return results;
+
+    }
+
+    public Set<ViewAlbumDetails> getMyAlbums(String username) {
+        Set<ViewAlbumDetails> results = new HashSet<>();
+        albumRepository.getAlbumsByPhotographer(username).forEach(
+                (elem) -> {
+                    results.add(new ViewAlbumDetails(elem, albumLocationRepository.findByAlbumId(elem.getId())));
+                });
+        return results;
     }
 }

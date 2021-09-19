@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface AlbumRepository extends JpaRepository<Album, Long> {
-    Optional<Album> findByName(String username);
-    Optional<Album> findById(int id);
+    Iterable<Album> getAlbumsByPhotographer(String username);
+    Optional<Album> findById(Long id);
+    Optional<Album> getAlbumById(Long id);
     Optional<Album> findFirstByPhotographerOrderByUploadedDateDesc(String photographer);
 }

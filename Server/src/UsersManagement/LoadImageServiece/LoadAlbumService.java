@@ -31,13 +31,13 @@ public class LoadAlbumService {
     @Autowired
     private AlbumRepository albumRepository;
 
-    private static String absolutePath = "C:\\Users\\dhnhd\\Desktop\\SneakPic\\SneakPic\\Server\\src\\main\\resources\\static\\Albums\\";
+    private static String absolutePath = "C:\\Users\\dhnhd\\IdeaProjects\\Hey\\Server\\src\\main\\resources\\static\\Albums\\";
+    private static String bucketName = "sneakpicbucket";
 
     public Long addNewAlbum(AlbumDetails albumDetails) {
         Album album = new Album();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<User> user= userRepository.findByUsername(username);
-        user.orElseThrow(()-> new UsernameNotFoundException("No Such User: "+ username));
+        User user= userRepository.getFirstByUsername(username);
 
         album.setPhotographer(username);
         Date date = new Date();
@@ -48,13 +48,17 @@ public class LoadAlbumService {
         Optional<Album> currentAlbum = albumRepository.findById(album.getId());
 
         //define user as a photographer now that an album had been uploaded by him
-        user.get().setIsPhotographer(true); //TODO check if it actually being saved on DB
+        if (!user.isPhotographer()){
+            user.setIsPhotographer(true); //TODO check if it actually being saved on DB
+            userRepository.save(user);
+        }
 
         //Save album Locations and evoke notifications
         AlbumsLocation albumLocation = new AlbumsLocation(album.getId(), albumDetails.getLat(), albumDetails.getLng(),
                 albumDetails.getFromTime(),albumDetails.getToTime());
         albumLocationRepository.save(albumLocation);
         notificationsService.searchForUsersLocationsAndNotify(albumLocation);
+
 
 
         File f = new File(this.absolutePath + currentAlbum.get().getId());

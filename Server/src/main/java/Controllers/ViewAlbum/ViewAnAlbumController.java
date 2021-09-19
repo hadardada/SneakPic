@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class ViewAlbumController {
+public class ViewAnAlbumController {
     @Autowired
     ViewAlbumService viewAlbumService;
     @Autowired

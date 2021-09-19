@@ -6,9 +6,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class AlbumDetails implements Serializable {
-    //private Long id;
     private String name;
-    //album position details
     private float lat;
     private float lng;
     private Timestamp fromTime;

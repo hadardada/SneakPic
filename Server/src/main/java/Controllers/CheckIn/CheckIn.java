@@ -41,6 +41,5 @@ public class CheckIn {
 
         //get location + time
         locationService.uploadUserLocation(position, user.get());
-        return;
     }
 }

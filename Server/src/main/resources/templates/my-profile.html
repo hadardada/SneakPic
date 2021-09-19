@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet"  type="text/css" href="/css/icon-bar.css">
+<link rel="stylesheet" href="/css/profile.css">
+<script src="https://kit.fontawesome.com/9a7aeebf11.js" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<head title="profile"></head>
+<body onload="injectDetails()">
+<div class="icon-bar">
+    <a href="/user/home"> <i class="fas fa-home"></i></a>
+    <a href="/user/search-location"><i class="fas fa-search-location"></i></a>
+    <a href="/user/check-in"><i class="fas fa-map-marker-alt"></i></a>
+    <a class = active> <i class="fas fa-user"></i></a>
+    <a href="/user/notifications" class="notification"><i class="fas fa-bell"></i><span class="badge" id="badge"></span></a>
+</div>
+
+<div class="details">
+    <span id="name"></span>
+    <span id="userType" class="icon"><i class="fas fa-camera"></i></span>
+    <span id="rating"></span>
+</div>
+<br>
+
+
+<div class = "myOptions">
+    <span class="ifPhotographer" id="isPhotographer">
+        <a href="/user/view-my-albums">Uploaded Albums</a>
+        <a href="/user/get-report">Purchases Report</a>
+    </span>
+    <span class="allUsers">
+        <a href="/user/view-matching-albums">Albums</a>
+        <a href="/user/view-matching-photos">Purchased Photos</a>
+        <a href = "/user/logout">Logout</a>
+    </span>
+</div>
+
+</body>
+<script src="/js/profile.js"></script>
+<script src = "/js/createStars.js"></script>
+
+</html>

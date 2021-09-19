@@ -20,7 +20,7 @@ public class User {
     String lastName;
     boolean isAdmin;
     boolean isPhotographer;
-    Double rating;
+    double rating;
     //TODO maybe each user (whether they a photografer or not) has a list of: albums, purchases, and so on
 
     ////////////////////////// constructors, getters and setters//////////////////////////////////
@@ -34,7 +34,7 @@ public class User {
         this.password = password;
         this.isAdmin = false;
         this.isPhotographer = isPhotographer;
-        this.rating = null;
+        this.rating = 0;
     }
 
     public String getUsername(){
@@ -72,6 +72,18 @@ public class User {
         this.password = password;
     }
 
+    public boolean isPhotographer() {
+        return isPhotographer;
+    }
+
+    public void setPhotographer(boolean photographer) {
+        isPhotographer = photographer;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
@@ -91,5 +103,17 @@ public class User {
      */
     public void setIsPhotographer(boolean isPhotographer) {
         this.isPhotographer = isPhotographer;
+    }
+
+    //Returns first+last name with first letter capitalized (since they are all stored in DB with lower case)
+    public String getFirstLetterIsCapitalize(){
+        String nameString = this.getFirstName()+" "+getLastName();
+        String[] names = nameString.split(" ");
+        String res ="";
+        for(String name: names){
+            name = name.substring(0,1).toUpperCase()+name.substring(1);
+            res = res + name + " ";
+        }
+        return res.substring(0,res.length()-1);
     }
 }
